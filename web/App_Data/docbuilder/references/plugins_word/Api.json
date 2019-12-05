@@ -1,0 +1,413 @@
+{
+  "methods": {
+    "OpenFile": {
+      "memberof": "Api",
+      "name": "OpenFile",
+      "description": "<p>Get all fields as text</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [
+        [
+          "Array.<string>"
+        ]
+      ],
+      "see": null,
+      "inherits": null
+    },
+    "InsertAndReplaceContentControls": {
+      "memberof": "Api",
+      "name": "InsertAndReplaceContentControls",
+      "description": "<p>Insert and replace content controls</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "object",
+          "name": "arrDocuments",
+          "optional": false
+        }
+      ]
+    },
+    "RemoveContentControls": {
+      "memberof": "Api",
+      "name": "RemoveContentControls",
+      "description": "<p>Remove content controls</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "object",
+          "name": "arrDocuments",
+          "optional": false
+        }
+      ]
+    },
+    "GetAllContentControls": {
+      "memberof": "Api",
+      "name": "GetAllContentControls",
+      "description": "<p>Get all content controls</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [
+        [
+          "Array.<ContentControl>"
+        ]
+      ],
+      "see": null,
+      "inherits": null
+    },
+    "AddContentControl": {
+      "memberof": "Api",
+      "name": "AddContentControl",
+      "description": "<p>Add content control</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [
+        [
+          "ContentControl"
+        ]
+      ],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "number",
+          "name": "type",
+          "description": "<p>Type: 1 = Block, 2 = Inline, 3 = Row, 4 = Cell</p>",
+          "optional": false
+        },
+        {
+          "type": "object",
+          "name": "pr",
+          "description": "<p>Properties</p>",
+          "optional": false
+        },
+        {
+          "type": "string",
+          "name": "pr.Id",
+          "description": "<p>Id</p>",
+          "optional": false
+        },
+        {
+          "type": "string",
+          "name": "pr.Tag",
+          "description": "<p>Tag</p>",
+          "optional": false
+        },
+        {
+          "type": "string",
+          "name": "pr.Lock",
+          "description": "<p>Lock</p>",
+          "optional": false
+        },
+        {
+          "type": "string",
+          "name": "pr.Alias",
+          "description": "<p>Alias</p>",
+          "optional": false
+        },
+        {
+          "type": "string",
+          "name": "pr.Appearance",
+          "description": "<p>Appearance</p>",
+          "optional": false
+        },
+        {
+          "type": "object",
+          "name": "pr.Color",
+          "description": "<p>Color</p>",
+          "optional": false
+        },
+        {
+          "type": "number",
+          "name": "pr.Color.R",
+          "description": "<p>R</p>",
+          "optional": false
+        },
+        {
+          "type": "number",
+          "name": "pr.Color.G",
+          "description": "<p>G</p>",
+          "optional": false
+        },
+        {
+          "type": "number",
+          "name": "pr.Color.B",
+          "description": "<p>B</p>",
+          "optional": false
+        }
+      ]
+    },
+    "RemoveContentControl": {
+      "memberof": "Api",
+      "name": "RemoveContentControl",
+      "description": "<p>Remove specified content control</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [
+        [
+          "Object"
+        ]
+      ],
+      "see": null,
+      "inherits": null
+    },
+    "GetCurrentContentControl": {
+      "memberof": "Api",
+      "name": "GetCurrentContentControl",
+      "description": "<p>Get current content control</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [
+        [
+          "Object"
+        ]
+      ],
+      "see": null,
+      "inherits": null
+    },
+    "GetCurrentContentControlPr": {
+      "memberof": "Api",
+      "name": "GetCurrentContentControlPr",
+      "description": "<p>Get current content control properties</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [
+        [
+          "Object"
+        ]
+      ],
+      "see": null,
+      "inherits": null
+    },
+    "SelectContentControl": {
+      "memberof": "Api",
+      "name": "SelectContentControl",
+      "description": "<p>Select specified content control</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "string",
+          "name": "id",
+          "description": "<p>Content control identifier</p>",
+          "optional": false
+        }
+      ]
+    },
+    "MoveCursorToContentControl": {
+      "memberof": "Api",
+      "name": "MoveCursorToContentControl",
+      "description": "<p>Move cursor to specified content control</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "string",
+          "name": "id",
+          "description": "<p>Content control identifier</p>",
+          "optional": false
+        },
+        {
+          "type": "boolean",
+          "name": "isBegin",
+          "optional": false
+        }
+      ]
+    },
+    "GetSelectedText": {
+      "memberof": "Api",
+      "name": "GetSelectedText",
+      "description": "<p>Get selection in document in text format</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null
+    },
+    "RemoveSelectedContent": {
+      "memberof": "Api",
+      "name": "RemoveSelectedContent",
+      "description": "<p>Remove selection in document</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null
+    },
+    "AddComment": {
+      "memberof": "Api",
+      "name": "AddComment",
+      "description": "<p>Add comment to document</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "string",
+          "name": "sMessage",
+          "description": "<p>Message</p>",
+          "optional": false
+        },
+        {
+          "type": "string",
+          "name": "sAuthorName",
+          "description": "<p>Author</p>",
+          "optional": false
+        }
+      ]
+    },
+    "MoveCursorToStart": {
+      "memberof": "Api",
+      "name": "MoveCursorToStart",
+      "description": "<p>Move cursor to Start</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "boolean",
+          "name": "isMoveToMainContent",
+          "optional": false
+        }
+      ]
+    },
+    "MoveCursorToEnd": {
+      "memberof": "Api",
+      "name": "MoveCursorToEnd",
+      "description": "<p>Move cursor to End</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "boolean",
+          "name": "isMoveToMainContent",
+          "optional": false
+        }
+      ]
+    },
+    "SearchAndReplace": {
+      "memberof": "Api",
+      "name": "SearchAndReplace",
+      "description": "<p>Find and replace text.</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "Object",
+          "name": "oProperties",
+          "description": "<p>The properties for find and replace.</p>",
+          "optional": false
+        },
+        {
+          "type": "string",
+          "name": "oProperties.searchString",
+          "description": "<p>Search string.</p>",
+          "optional": false
+        },
+        {
+          "type": "string",
+          "name": "oProperties.replaceString",
+          "description": "<p>Replacement string.</p>",
+          "optional": false
+        },
+        {
+          "type": "boolean",
+          "name": "oProperties.matchCase",
+          "optional": true,
+          "defaultValue": true
+        }
+      ]
+    },
+    "GetFileHTML": {
+      "memberof": "Api",
+      "name": "GetFileHTML",
+      "description": "<p>Get file content in html format</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [
+        [
+          "string"
+        ]
+      ],
+      "see": null,
+      "inherits": null
+    }
+  },
+  "comment": "/**\r\n     * Base class\r\n     * @global\r\n     * @class\r\n     * @name Api\r\n     */",
+  "description": "<p>Base class</p>",
+  "scope": "global"
+}

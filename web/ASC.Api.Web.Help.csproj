@@ -225,6 +225,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EditorsController.cs" />
     <Compile Include="Controllers\PortalsController.cs" />
+    <Compile Include="DocumentGenerator\PluginsDocumentation.cs" />
+    <Compile Include="DocumentGenerator\JsDocParser.cs" />
     <Compile Include="DocumentGenerator\DocBuilderDocumentation.cs" />
     <Compile Include="DocumentGenerator\Documentation.cs" />
     <Compile Include="DocumentGenerator\MsDocDocumentGenerator.cs" />
@@ -452,6 +454,7 @@
     <Content Include="Views\Plugin\Info\Default.ascx" />
     <Content Include="Views\Plugin\Localization.aspx" />
     <Content Include="Views\Plugin\Macros\Macros.aspx" />
+    <Content Include="Views\Plugin\methodpartial.aspx" />
     <Content Include="Views\Plugin\OnExternalMouseUp.aspx" />
     <Content Include="Views\Plugin\Info.aspx" />
     <Content Include="Views\Plugin\Init.aspx" />
@@ -461,6 +464,7 @@
     <Content Include="Views\Plugin\Plugin.aspx" />
     <Content Include="Views\Plugin\scope.aspx" />
     <Content Include="Views\Plugin\IndexHtml.aspx" />
+    <Content Include="Views\Plugin\sectionpartial.aspx" />
     <Content Include="Views\Plugin\Structure.aspx" />
     <Content Include="Views\Plugin\Installation.aspx" />
     <Content Include="Views\Plugin\Navigation.ascx" />

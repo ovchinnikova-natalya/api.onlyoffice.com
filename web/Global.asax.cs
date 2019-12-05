@@ -166,7 +166,8 @@ namespace ASC.Api.Web.Help
 
                         try
                         {
-                            DocBuilderDocumentation.Load();
+                            DocBuilderDocumentation.JsDocParser.Load();
+                            PluginsDocumentation.JsDocParser.Load();
                         }
                         catch (Exception error)
                         {

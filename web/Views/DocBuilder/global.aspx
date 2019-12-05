@@ -26,7 +26,7 @@
             <h5>Type:</h5>
             <ul>
                 <li>
-                    <%= DocBuilderDocumentation.TypesToHtml(type.Value.Types, type.Value.Module) %>
+                    <%= DocBuilderDocumentation.JsDocParser.TypesToHtml(type.Value.Types, type.Value.Module) %>
                 </li>
             </ul>
             </div>

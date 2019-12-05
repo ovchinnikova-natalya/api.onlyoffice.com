@@ -72,6 +72,7 @@ namespace ASC.Api.Web.Help.Controllers
                 "OnExternalMouseUp",
                 "onmethodreturn",
                 "Plugin",
+                "plugins",
                 "scope",
                 "Structure",
                 "macros/Macros",
@@ -224,6 +225,11 @@ namespace ASC.Api.Web.Help.Controllers
             return View();
         }
 
+        public ActionResult Plugins(string catchall)
+        {
+            return FindDoc("plugins_word", catchall);
+        }
+
         public ActionResult scope()
         {
             return View();
@@ -253,6 +259,24 @@ namespace ASC.Api.Web.Help.Controllers
             return View("Macros/WritingMacros");
         }
 
+        private ActionResult FindDoc(string module, string path)
+        {
+            var split = path.Split('/');
+            var section = split[0];
+            var method = split.Length > 1 ? split[1] : null;
 
+            if (string.IsNullOrEmpty(method))
+            {
+                var sec = PluginsDocumentation.JsDocParser.GetSection(module, section);
+                if (sec == null) return View("sectionnotfound");
+                return View("sectionpartial", sec);
+            }
+            else
+            {
+                var met = PluginsDocumentation.JsDocParser.GetMethod(module, section, method);
+                if (met == null) return View("methodnotfound");
+                return View("methodpartial", met);
+            }
+        }
     }
 }

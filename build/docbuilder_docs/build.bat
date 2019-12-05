@@ -4,7 +4,7 @@ REM variables
 set sdkjsPath=sdkjs
 set outPath=jsdoc
 set branch=master
-set cloneRepo=Y
+set cloneRepo=N
 set parseDocs=Y
 
 if %cloneRepo% NEQ Y goto skipClone
@@ -28,6 +28,7 @@ if %parseDocs% NEQ Y goto skipParse
     copy %sdkjsPath%\word\apiBuilder.js tmp\word.js
     copy %sdkjsPath%\cell\apiBuilder.js tmp\cell.js
     copy %sdkjsPath%\slide\apiBuilder.js tmp\slide.js
+    copy %sdkjsPath%\word\api_plugins.js tmp\word_plugins.js
 
     REM download dependencies
     call npm install
@@ -44,5 +45,8 @@ if %parseDocs% NEQ Y goto skipParse
     md out
     node node_modules\jsdoc\jsdoc.js tmp\slide.js  -t . -c .\conf.json
     move out %outPath%\slide
+    md out
+    node node_modules\jsdoc\jsdoc.js tmp\word_plugins.js  -t . -c .\conf.json
+    move out %outPath%\plugins_word
     md out
 :skipParse

@@ -29,6 +29,7 @@ then
     cp $sdkjsPath/word/apiBuilder.js tmp/word.js
     cp $sdkjsPath/cell/apiBuilder.js tmp/cell.js
     cp $sdkjsPath/slide/apiBuilder.js tmp/slide.js
+    cp $sdkjsPath/word/api_plugins.js tmp/word_plugins.js
 
     # download dependencies
     npm install
@@ -45,5 +46,8 @@ then
     mkdir out
     node node_modules/jsdoc/jsdoc.js tmp/slide.js  -t . -c ./conf.json
     mv out $outPath/slide/
+    mkdir out
+    node node_modules/jsdoc/jsdoc.js tmp/word_plugins.js  -t . -c ./conf.json
+    mv out $outPath/plugins_word/
     mkdir out
 fi

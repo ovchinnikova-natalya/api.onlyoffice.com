@@ -1,4 +1,5 @@
-﻿<%@ Control
+﻿<%@ Import Namespace="ASC.Api.Web.Help.DocumentGenerator" %>
+<%@ Control
     Language="C#"
     Inherits="System.Web.Mvc.ViewUserControl" %>
 
@@ -102,6 +103,23 @@
                     <li>
                         <a href="<%= Url.Action("onmethodreturn") %>">onMethodReturn</a>
                     </li>
+                </ul>
+            </li>
+            <li>
+                <a href="<%= Url.Action("plugins") %>">Text document Plugins API</a>
+                <ul>
+                    <% foreach (var entry in PluginsDocumentation.JsDocParser.GetModule("plugins_word")) { %>
+                        <li>
+                            <a href="<%= Url.Action(string.Format("plugins/{0}", entry.Key.ToLower())) %>"> <%= entry.Key %></a>
+                            <ul>
+                                <% foreach (var method in entry.Value.Methods) { %>
+                                    <li>
+                                        <a href="<%= Url.Action(string.Format("plugins/{0}/{1}", entry.Key.ToLower(), method.Key.ToLower())) %>"><%= method.Key %></a>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        </li>
+                    <% } %>
                 </ul>
             </li>
             <li>

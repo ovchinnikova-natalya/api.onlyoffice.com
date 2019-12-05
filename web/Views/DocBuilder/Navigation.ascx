@@ -93,7 +93,7 @@
     <li>
         <a href="<%= Url.Action("textdocumentapi") %>">Text document API</a>
         <ul>
-            <% foreach (var entry in DocBuilderDocumentation.GetModule("word")) { %>
+            <% foreach (var entry in DocBuilderDocumentation.JsDocParser.GetModule("word")) { %>
                 <li>
                     <a href="<%= Url.Action(string.Format("textdocumentapi/{0}", entry.Key.ToLower())) %>"> <%= entry.Key %></a>
                     <ul>
@@ -109,7 +109,7 @@
     <li>
         <a href="<%= Url.Action("spreadsheetapi") %>">Spreadsheet API</a>
         <ul>
-            <% foreach (var entry in DocBuilderDocumentation.GetModule("cell")) { %>
+            <% foreach (var entry in DocBuilderDocumentation.JsDocParser.GetModule("cell")) { %>
                 <li>
                     <a href="<%= Url.Action(string.Format("spreadsheetapi/{0}", entry.Key.ToLower())) %>"> <%= entry.Key %></a>
                     <ul>
@@ -126,7 +126,7 @@
     <li>
         <a href="<%= Url.Action("presentationapi") %>">Presentation API</a>
         <ul>
-            <% foreach (var entry in DocBuilderDocumentation.GetModule("slide")) { %>
+            <% foreach (var entry in DocBuilderDocumentation.JsDocParser.GetModule("slide")) { %>
                 <li>
                     <a href="<%= Url.Action(string.Format("presentationapi/{0}", entry.Key.ToLower())) %>"> <%= entry.Key %></a>
                     <ul>
