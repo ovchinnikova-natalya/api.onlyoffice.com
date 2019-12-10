@@ -39,24 +39,11 @@
                     <li>
                         <a href="<%= Url.Action("executemethod") %>">executeMethod</a>
                         <ul>
-                            <li>
-                                <a href="<%= Url.Action("executemethod/insertandreplacecontentcontrols") %>">InsertAndReplaceContentControls</a>
-                            </li>
-                            <li>
-                                <a href="<%= Url.Action("executemethod/removecontentcontrols") %>">RemoveContentControls</a>
-                            </li>
-                            <li>
-                                <a href="<%= Url.Action("executemethod/getallcontentcontrols") %>">GetAllContentControls</a>
-                            </li>
-                            <li>
-                                <a href="<%= Url.Action("executemethod/addcontentcontrol") %>">AddContentControl</a>
-                            </li>
-                            <li>
-                                <a href="<%= Url.Action("executemethod/removecontentcontrol") %>">RemoveContentControl</a>
-                            </li>
-                            <li>
-                                <a href="<%= Url.Action("executemethod/getcurrentcontentcontrol") %>">GetCurrentContentControl</a>
-                            </li>
+                            <% foreach (var method in PluginsDocumentation.JsDocParser.GetModule("plugins_word")["Api"].Methods) { %>
+                                <li>
+                                    <a href="<%= Url.Action(string.Format("plugins/{0}/{1}", "api", method.Key.ToLower())) %>"><%= method.Key %></a>
+                                </li>
+                            <% } %>
                         </ul>
                     </li>
                     <li>
@@ -103,23 +90,6 @@
                     <li>
                         <a href="<%= Url.Action("onmethodreturn") %>">onMethodReturn</a>
                     </li>
-                </ul>
-            </li>
-            <li>
-                <a href="<%= Url.Action("plugins") %>">Text document Plugins API</a>
-                <ul>
-                    <% foreach (var entry in PluginsDocumentation.JsDocParser.GetModule("plugins_word")) { %>
-                        <li>
-                            <a href="<%= Url.Action(string.Format("plugins/{0}", entry.Key.ToLower())) %>"> <%= entry.Key %></a>
-                            <ul>
-                                <% foreach (var method in entry.Value.Methods) { %>
-                                    <li>
-                                        <a href="<%= Url.Action(string.Format("plugins/{0}/{1}", entry.Key.ToLower(), method.Key.ToLower())) %>"><%= method.Key %></a>
-                                    </li>
-                                <% } %>
-                            </ul>
-                        </li>
-                    <% } %>
                 </ul>
             </li>
             <li>
