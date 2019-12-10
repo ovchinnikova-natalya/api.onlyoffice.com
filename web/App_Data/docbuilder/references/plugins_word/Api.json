@@ -20,7 +20,7 @@
           "optional": false
         },
         {
-          "type": "Array.<string>",
+          "type": "string[]",
           "name": "fields",
           "description": "<p>List fields values</p>",
           "optional": false
@@ -38,7 +38,7 @@
       },
       "returns": [
         [
-          "Array.<string>"
+          "string[]"
         ]
       ],
       "see": null,
@@ -55,14 +55,14 @@
       },
       "returns": [
         [
-          "Array.<ContentControlProperties>"
+          "ContentControlProperties[]"
         ]
       ],
       "see": null,
       "inherits": null,
       "params": [
         {
-          "type": "Array.<ContentControlPropertiesAndContent>",
+          "type": "ContentControlPropertiesAndContent[]",
           "name": "arrDocuments",
           "description": "<p>is array of properties and contents of content controls.</p>",
           "optional": false
@@ -87,7 +87,7 @@
       "inherits": null,
       "params": [
         {
-          "type": "Array.<ContentControl>",
+          "type": "ContentControl[]",
           "name": "arrDocuments",
           "description": "<p>is a array of InternalId's. example: [{&quot;InternalId&quot;: &quot;5_556&quot;}]</p>",
           "optional": false
@@ -105,7 +105,7 @@
       },
       "returns": [
         [
-          "Array.<ContentControl>"
+          "ContentControl[]"
         ]
       ],
       "see": null,

@@ -80,7 +80,7 @@ function get_params(data) {
         if (x.type) { type = x.type.names.join(" | ") }
         if (x.type) {
             params.push({
-                "type": type,
+                "type": replaceArrayString(type),
                 "name": x.name,
                 "description": x.description,
                 "optional": !!x.optional,
@@ -119,8 +119,15 @@ function get_returns(data) {
     if (data) {
 
     data.forEach(return_data => {
-        returns.push(return_data.type.names);
+        var names = return_data.type.names;
+        for (var i = 0; i < names.length; i++) names[i] = replaceArrayString(names[i]);
+        returns.push(names);
     });
     }
     return returns;
+}
+
+let replaceArrayRegex = /Array\.<([A-z0-9]+)>/;
+function replaceArrayString(name) {
+    return name.replace(replaceArrayRegex, "$1[]");
 }
