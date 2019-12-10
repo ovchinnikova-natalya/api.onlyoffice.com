@@ -4,5 +4,32 @@
     "type": [
       "Object"
     ]
+  },
+  "ContentControlLock": {
+    "name": "ContentControlLock",
+    "description": "<p>Is a value that defines if it is possible to delete and/or edit the content control or not</p>\n<p><strong>0</strong> - only deleting\n<strong>1</strong> - disable deleting or editing\n<strong>2</strong> - only editing\n<strong>3</strong> - full access</p>",
+    "type": [
+      "Object"
+    ]
+  },
+  "ContentControlType": {
+    "name": "ContentControlType",
+    "description": "<p>Is a numeric value that specifies the content control type.</p>",
+    "type": [
+      "Object"
+    ]
+  },
+  "ContentControlPropertiesAndContent": {
+    "name": "ContentControlPropertiesAndContent",
+    "description": "<p>Is array of properties and contents of content controls.</p>",
+    "type": [
+      "Object"
+    ]
+  },
+  "ContentControlProperties": {
+    "name": "ContentControlProperties",
+    "type": [
+      "Object"
+    ]
   }
 }

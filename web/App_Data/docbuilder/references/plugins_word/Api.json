@@ -3,6 +3,33 @@
     "OpenFile": {
       "memberof": "Api",
       "name": "OpenFile",
+      "description": "<p>Open file with fields</p>",
+      "tags": {
+        "typeofeditors": [
+          "CDE"
+        ]
+      },
+      "returns": [],
+      "see": null,
+      "inherits": null,
+      "params": [
+        {
+          "type": "Uint8Array",
+          "name": "binaryFile",
+          "description": "<p>File bytes</p>",
+          "optional": false
+        },
+        {
+          "type": "Array.<string>",
+          "name": "fields",
+          "description": "<p>List fields values</p>",
+          "optional": false
+        }
+      ]
+    },
+    "GetFields": {
+      "memberof": "Api",
+      "name": "GetFields",
       "description": "<p>Get all fields as text</p>",
       "tags": {
         "typeofeditors": [
@@ -20,19 +47,24 @@
     "InsertAndReplaceContentControls": {
       "memberof": "Api",
       "name": "InsertAndReplaceContentControls",
-      "description": "<p>Insert and replace content controls</p>",
+      "description": "<p>This method inserts a content control that contains data. The data is specified by the js code for Document Builder, or by the link to a shared document.</p>",
       "tags": {
         "typeofeditors": [
           "CDE"
         ]
       },
-      "returns": [],
+      "returns": [
+        [
+          "Array.<ContentControlProperties>"
+        ]
+      ],
       "see": null,
       "inherits": null,
       "params": [
         {
-          "type": "object",
+          "type": "Array.<ContentControlPropertiesAndContent>",
           "name": "arrDocuments",
+          "description": "<p>is array of properties and contents of content controls.</p>",
           "optional": false
         }
       ]
@@ -40,19 +72,24 @@
     "RemoveContentControls": {
       "memberof": "Api",
       "name": "RemoveContentControls",
-      "description": "<p>Remove content controls</p>",
+      "description": "<p>This method allows to remove several content controls.</p>",
       "tags": {
         "typeofeditors": [
           "CDE"
         ]
       },
-      "returns": [],
+      "returns": [
+        [
+          "undefined"
+        ]
+      ],
       "see": null,
       "inherits": null,
       "params": [
         {
-          "type": "object",
+          "type": "Array.<ContentControl>",
           "name": "arrDocuments",
+          "description": "<p>is a array of InternalId's. example: [{&quot;InternalId&quot;: &quot;5_556&quot;}]</p>",
           "optional": false
         }
       ]
@@ -60,7 +97,7 @@
     "GetAllContentControls": {
       "memberof": "Api",
       "name": "GetAllContentControls",
-      "description": "<p>Get all content controls</p>",
+      "description": "<p>This method allows to get information about all content controls that have been added to the page.</p>",
       "tags": {
         "typeofeditors": [
           "CDE"
@@ -77,7 +114,7 @@
     "AddContentControl": {
       "memberof": "Api",
       "name": "AddContentControl",
-      "description": "<p>Add content control</p>",
+      "description": "<p>This method allows to add an empty content control to the document.</p>",
       "tags": {
         "typeofeditors": [
           "CDE"
@@ -92,77 +129,24 @@
       "inherits": null,
       "params": [
         {
-          "type": "number",
+          "type": "ContentControlType",
           "name": "type",
-          "description": "<p>Type: 1 = Block, 2 = Inline, 3 = Row, 4 = Cell</p>",
+          "description": "<p>is a numeric value that specifies the content control type</p>",
           "optional": false
         },
         {
-          "type": "object",
-          "name": "pr",
-          "description": "<p>Properties</p>",
-          "optional": false
-        },
-        {
-          "type": "string",
-          "name": "pr.Id",
-          "description": "<p>Id</p>",
-          "optional": false
-        },
-        {
-          "type": "string",
-          "name": "pr.Tag",
-          "description": "<p>Tag</p>",
-          "optional": false
-        },
-        {
-          "type": "string",
-          "name": "pr.Lock",
-          "description": "<p>Lock</p>",
-          "optional": false
-        },
-        {
-          "type": "string",
-          "name": "pr.Alias",
-          "description": "<p>Alias</p>",
-          "optional": false
-        },
-        {
-          "type": "string",
-          "name": "pr.Appearance",
-          "description": "<p>Appearance</p>",
-          "optional": false
-        },
-        {
-          "type": "object",
-          "name": "pr.Color",
-          "description": "<p>Color</p>",
-          "optional": false
-        },
-        {
-          "type": "number",
-          "name": "pr.Color.R",
-          "description": "<p>R</p>",
-          "optional": false
-        },
-        {
-          "type": "number",
-          "name": "pr.Color.G",
-          "description": "<p>G</p>",
-          "optional": false
-        },
-        {
-          "type": "number",
-          "name": "pr.Color.B",
-          "description": "<p>B</p>",
-          "optional": false
+          "type": "ContentControlProperties",
+          "name": "properties",
+          "description": "<p>is property of content control</p>",
+          "optional": true,
+          "defaultValue": "{}"
         }
       ]
     },
     "RemoveContentControl": {
       "memberof": "Api",
       "name": "RemoveContentControl",
-      "description": "<p>Remove specified content control</p>",
+      "description": "<p>This method allows to remove content control, but leave all its contents.</p>",
       "tags": {
         "typeofeditors": [
           "CDE"
@@ -174,12 +158,20 @@
         ]
       ],
       "see": null,
-      "inherits": null
+      "inherits": null,
+      "params": [
+        {
+          "type": "string",
+          "name": "InternalId",
+          "description": "<p>is a InternalId of the content control</p>",
+          "optional": false
+        }
+      ]
     },
     "GetCurrentContentControl": {
       "memberof": "Api",
       "name": "GetCurrentContentControl",
-      "description": "<p>Get current content control</p>",
+      "description": "<p>This method allows to get the identifier of the selected content control (i.e. the content control where the mouse cursor is currently positioned).</p>",
       "tags": {
         "typeofeditors": [
           "CDE"
@@ -187,7 +179,7 @@
       },
       "returns": [
         [
-          "Object"
+          "string"
         ]
       ],
       "see": null,
@@ -204,7 +196,7 @@
       },
       "returns": [
         [
-          "Object"
+          "ContentControlProperties"
         ]
       ],
       "see": null,
@@ -226,7 +218,7 @@
         {
           "type": "string",
           "name": "id",
-          "description": "<p>Content control identifier</p>",
+          "description": "<p>is a InternalId of the content control</p>",
           "optional": false
         }
       ]
@@ -240,20 +232,26 @@
           "CDE"
         ]
       },
-      "returns": [],
+      "returns": [
+        [
+          "undefined"
+        ]
+      ],
       "see": null,
       "inherits": null,
       "params": [
         {
           "type": "string",
           "name": "id",
-          "description": "<p>Content control identifier</p>",
+          "description": "<p>InternalId of content control</p>",
           "optional": false
         },
         {
           "type": "boolean",
           "name": "isBegin",
-          "optional": false
+          "description": "<p>is a option for changing cursor position in content control. By default, cursor will place in begin of content control</p>",
+          "optional": true,
+          "defaultValue": false
         }
       ]
     },
@@ -279,7 +277,11 @@
           "CDE"
         ]
       },
-      "returns": [],
+      "returns": [
+        [
+          "undefined"
+        ]
+      ],
       "see": null,
       "inherits": null
     },
@@ -384,6 +386,7 @@
         {
           "type": "boolean",
           "name": "oProperties.matchCase",
+          "description": "<p>matchCase option</p>",
           "optional": true,
           "defaultValue": true
         }
