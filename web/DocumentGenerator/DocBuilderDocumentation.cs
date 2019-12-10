@@ -21,7 +21,8 @@ namespace ASC.Api.Web.Help.DocumentGenerator
                     { "CDE", "word" },
                     { "CPE", "slide" },
                     { "CSE", "cell" }
-                }
+                },
+                "docbuilder"
             );
         }
     }

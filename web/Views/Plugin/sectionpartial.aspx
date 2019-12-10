@@ -37,7 +37,7 @@
             <% foreach(var p in section.Params) { %>
                 <tr class="tablerow">
                     <td><em><%= p.Name %>></em></td>
-                    <td><%= DocBuilderDocumentation.JsDocParser.ParamTypeToHtml(p) %></td>
+                    <td><%= PluginsDocumentation.JsDocParser.ParamTypeToHtml(p) %></td>
                     <td><%= p.Description %></td>
                 </tr>
             <% } %>

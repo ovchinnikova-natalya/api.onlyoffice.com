@@ -17,7 +17,8 @@ namespace ASC.Api.Web.Help.DocumentGenerator
                 new Dictionary<string, string>
                 {
                     { "CDE", "plugins_word" },
-                }
+                },
+                "plugin"
             );
         }
     }

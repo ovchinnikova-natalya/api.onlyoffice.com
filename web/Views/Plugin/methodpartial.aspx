@@ -22,7 +22,7 @@
         <%= method.Name %>(<%= method.Params != null ? string.Join(", ", method.Params.Select(p => p.Optional ? string.Format("[{0}]", p.Name) : p.Name)) : "" %>)
         <% if (method.Returns != null && method.Returns.Any())
            { %>
-            &rarr; { <%= DocBuilderDocumentation.JsDocParser.ReturnTypeToHtml(method) %> }
+            &rarr; { <%= PluginsDocumentation.JsDocParser.ReturnTypeToHtml(method) %> }
         <% } %>
     </h4>
 
@@ -61,7 +61,7 @@
                 <tr class="tablerow">
                     <td><em><%= p.Name %></em></td>
                     <td>
-                        <em><%= DocBuilderDocumentation.JsDocParser.ParamTypeToHtml(p) %></em>
+                        <em><%= PluginsDocumentation.JsDocParser.ParamTypeToHtml(p) %></em>
                     </td>
                     <% if (hasOptional) { %>
                         <td><%= p.DefaultValue == null ? (p.Optional ? "null" : "") : p.DefaultValue %></td>
@@ -78,17 +78,15 @@
     <dl class="param-type">
         <dt>Type</dt>
         <dd>
-            <%= DocBuilderDocumentation.JsDocParser.ReturnTypeToHtml(method) %>
+            <%= PluginsDocumentation.JsDocParser.ReturnTypeToHtml(method) %>
         </dd>
     </dl>
     <% } %>
 
-    <% if (method.Example != null) { %>
-        <% if (!string.IsNullOrEmpty(method.Example.Script)) { %>
+    <% if (method.Tags != null && !string.IsNullOrEmpty(method.Tags.Example)) { %>
                 <h2>Example</h2>
                 <div class="button copy-code">Copy code</div>
-<pre><%= method.Example.Script %></pre>
-        <% } %>
+<pre><%= method.Tags.Example %></pre>
 
         <% if (!string.IsNullOrEmpty(method.Example.DemoUrl)) { %>
             <h2>Resulting document</h2>

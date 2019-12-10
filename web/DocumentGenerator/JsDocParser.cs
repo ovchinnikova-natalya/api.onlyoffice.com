@@ -20,13 +20,15 @@ namespace ASC.Api.Web.Help.DocumentGenerator
         private Dictionary<string, SortedDictionary<string, DBEntry>> _entries;
         private SortedDictionary<string, DBGlobal> _globals;
 
-        private ILog _logger;
-        private List<string> _foldersToParse; 
+        private readonly ILog _logger;
+        private readonly List<string> _foldersToParse;
+        private readonly string _namespacePath;
 
-        public JsDocParser(List<string> foldersToParse, ILog logger, Dictionary<string, string> pathMap, Dictionary<string, string> typeMap)
+        public JsDocParser(List<string> foldersToParse, ILog logger, Dictionary<string, string> pathMap, Dictionary<string, string> typeMap, string namespacePath)
         {
             _foldersToParse = foldersToParse;
             _logger = logger;
+            _namespacePath = namespacePath;
             PathMapping = pathMap;
             EditorsTypeMapping = typeMap;
         }
@@ -151,11 +153,11 @@ namespace ASC.Api.Web.Help.DocumentGenerator
                 {
                     result.Add(new SearchResult
                         {
-                            Module = "docbuilder",
+                            Module = _namespacePath,
                             Name = action,
                             Resource = Highliter.HighliteString(section.Name, query).ToHtmlString(),
                             Description = Highliter.HighliteString(section.Description, query).ToHtmlString(),
-                            Url = url.Action(action, "docbuilder")
+                            Url = url.Action(action, _namespacePath)
                         });
                 }
 
@@ -166,11 +168,11 @@ namespace ASC.Api.Web.Help.DocumentGenerator
                         var methodAction = string.Format("{0}/{1}", action, method.Name);
                         result.Add(new SearchResult
                             {
-                                Module = "docbuilder",
+                                Module = _namespacePath,
                                 Name = methodAction,
                                 Resource = Highliter.HighliteString(method.Name, query).ToHtmlString(),
                                 Description = Highliter.HighliteString(method.Description, query).ToHtmlString(),
-                                Url = url.Action(methodAction, "docbuilder")
+                                Url = url.Action(methodAction, _namespacePath)
                             });
                     }
                 }
@@ -180,10 +182,10 @@ namespace ASC.Api.Web.Help.DocumentGenerator
             {
                 if (type.Key.ToLowerInvariant().Contains(q) || (!string.IsNullOrEmpty(type.Value.Description) && type.Value.Description.ToLowerInvariant().Contains(q)))
                 {
-                    var action = string.Format("{0}#{1}", url.Action("global", "docbuilder"), type.Key);
+                    var action = string.Format("{0}#{1}", url.Action("global", _namespacePath), type.Key);
                     result.Add(new SearchResult
                         {
-                            Module = "docbuilder",
+                            Module = _namespacePath,
                             Name = action,
                             Resource = Highliter.HighliteString(type.Key, query).ToHtmlString(),
                             Description = Highliter.HighliteString(type.Value.Description, query).ToHtmlString(),
@@ -205,7 +207,7 @@ namespace ASC.Api.Web.Help.DocumentGenerator
 
             if (module.ContainsKey(type))
             {
-                return string.Format("/docbuilder/{0}/{1}", module[type].Path, module[type].Name);
+                return string.Format("/{0}/{1}/{2}", _namespacePath, module[type].Path, module[type].Name);
             }
 
             var sections = _entries.Where(kv => kv.Key != priorityModule).SelectMany(m => m.Value.Values);
@@ -214,7 +216,7 @@ namespace ASC.Api.Web.Help.DocumentGenerator
             {
                 if (section.Name.ToLowerInvariant() == type)
                 {
-                    return string.Format("/docbuilder/{0}/{1}", section.Path, section.Name);
+                    return string.Format("/{0}/{1}/{2}", _namespacePath, section.Path, section.Name);
                 }
             }
 
@@ -222,7 +224,7 @@ namespace ASC.Api.Web.Help.DocumentGenerator
             {
                 if (global.Key.ToLowerInvariant() == type)
                 {
-                    return string.Format("/docbuilder/global#{0}", global.Key);
+                    return string.Format("/{0}/global#{1}", _namespacePath, global.Key);
                 }
             }
 
@@ -547,6 +549,9 @@ namespace ASC.Api.Web.Help.DocumentGenerator
     {
         [JsonProperty("typeofeditors")]
         public List<string> EditorTypes { get; set; }
+
+        [JsonProperty("example")]
+        public string Example { get; set; }
     }
 
     public class DBParam : DBEntity
