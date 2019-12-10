@@ -441,6 +441,7 @@
     <Content Include="Views\Plugin\Executemethod\insertandreplacecontentcontrols.ascx" />
     <Content Include="Views\Plugin\Executemethod\removecontentcontrol.ascx" />
     <Content Include="Views\Plugin\Executemethod\removecontentcontrols.ascx" />
+    <Content Include="Views\Plugin\global.aspx" />
     <Content Include="Views\Plugin\Info\Recalculate.ascx" />
     <Content Include="Views\Plugin\Info\ImgSrc.ascx" />
     <Content Include="Views\Plugin\Info\Data.ascx" />

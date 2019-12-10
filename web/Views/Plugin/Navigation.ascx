@@ -123,6 +123,9 @@
                 </ul>
             </li>
             <li>
+                <a href="<%= Url.Action("global") %>">Global</a>
+            </li>
+            <li>
                 <a href="<%= Url.Action("scope") %>">Asc.scope object</a>
             </li>
         </ul>
