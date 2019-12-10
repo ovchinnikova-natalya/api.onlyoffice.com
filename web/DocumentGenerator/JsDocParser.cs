@@ -200,6 +200,7 @@ namespace ASC.Api.Web.Help.DocumentGenerator
         public string SearchType(string type, string priorityModule = "word")
         {
             if (type.StartsWith("\"")) return null;
+            if (type.EndsWith("[]")) type = type.Substring(0, type.Length - 2);
 
             type = type.ToLowerInvariant();
             var module = GetModule(priorityModule);
