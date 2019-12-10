@@ -49,6 +49,7 @@ function add_method(doclet, main_data) {
 
     method.memberof = doclet.memberof;
     method.name = doclet.name;
+    method.example = get_examples(doclet.examples);
     method.description = doclet.description;
     method.tags = get_tags(doclet.tags);
     method.returns = get_returns(doclet.returns);
@@ -69,8 +70,18 @@ function add_typedef(doclet, main_data) {
     main_data.Globals[doclet.name] = {
         name: doclet.name,
         description: doclet.description,
-        type: doclet.type.names
+        type: doclet.type.names,
+        example: get_examples(doclet.examples)
     };
+
+    if (doclet.properties) {
+        main_data.Globals[doclet.name].props = get_params(doclet.properties);
+    }
+}
+
+function get_examples(data) {
+    if (data && data.length > 0) return data[0];
+    return null;
 }
 
 function get_params(data) {

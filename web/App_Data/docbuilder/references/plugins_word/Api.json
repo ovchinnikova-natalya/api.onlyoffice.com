@@ -3,6 +3,7 @@
     "OpenFile": {
       "memberof": "Api",
       "name": "OpenFile",
+      "example": null,
       "description": "<p>Open file with fields</p>",
       "tags": {
         "typeofeditors": [
@@ -30,6 +31,7 @@
     "GetFields": {
       "memberof": "Api",
       "name": "GetFields",
+      "example": null,
       "description": "<p>Get all fields as text</p>",
       "tags": {
         "typeofeditors": [
@@ -47,6 +49,7 @@
     "InsertAndReplaceContentControls": {
       "memberof": "Api",
       "name": "InsertAndReplaceContentControls",
+      "example": "// Add new content control\rvar arrDocuments = [{\r \"Props\": {\r      \"Id\": 100,\r      \"Tag\": \"CC_Tag\",\r      \"Lock\": 3\r  },\r  \"Script\": \"var oParagraph = Api.CreateParagraph();oParagraph.AddText('Hello world!');Api.GetDocument().InsertContent([oParagraph]);\"\r}]\rwindow.Asc.plugin.executeMethod(\"InsertAndReplaceContentControls\", [arrDocuments]);\r\r// Change existed content control\rvar arrDocuments = [{\r \"Props\": {\r      \"InternalId\": \"2_803\"\r  },\r  \"Script\": \"var oParagraph = Api.CreateParagraph();oParagraph.AddText('New text');Api.GetDocument().InsertContent([oParagraph]);\"\r}]\rwindow.Asc.plugin.executeMethod(\"InsertAndReplaceContentControls\", [arrDocuments]);",
       "description": "<p>This method inserts a content control that contains data. The data is specified by the js code for Document Builder, or by the link to a shared document.</p>",
       "tags": {
         "typeofeditors": [
@@ -72,6 +75,7 @@
     "RemoveContentControls": {
       "memberof": "Api",
       "name": "RemoveContentControls",
+      "example": "window.Asc.plugin.executeMethod(\"RemoveContentControls\", [[{\"InternalId\": \"5_556\"}]])",
       "description": "<p>This method allows to remove several content controls.</p>",
       "tags": {
         "typeofeditors": [
@@ -97,6 +101,7 @@
     "GetAllContentControls": {
       "memberof": "Api",
       "name": "GetAllContentControls",
+      "example": "window.Asc.plugin.executeMethod(\"GetAllContentControls\");",
       "description": "<p>This method allows to get information about all content controls that have been added to the page.</p>",
       "tags": {
         "typeofeditors": [
@@ -114,6 +119,7 @@
     "AddContentControl": {
       "memberof": "Api",
       "name": "AddContentControl",
+      "example": "var type = 1;\rvar properties = {\"Id\": 100, \"Tag\": \"CC_Tag\", \"Lock\": 3};\rwindow.Asc.plugin.executeMethod(\"AddContentControl\", [type, properties]);",
       "description": "<p>This method allows to add an empty content control to the document.</p>",
       "tags": {
         "typeofeditors": [
@@ -146,6 +152,7 @@
     "RemoveContentControl": {
       "memberof": "Api",
       "name": "RemoveContentControl",
+      "example": "window.Asc.plugin.executeMethod(\"RemoveContentControl\", [\"InternalId\"])",
       "description": "<p>This method allows to remove content control, but leave all its contents.</p>",
       "tags": {
         "typeofeditors": [
@@ -171,6 +178,7 @@
     "GetCurrentContentControl": {
       "memberof": "Api",
       "name": "GetCurrentContentControl",
+      "example": "window.Asc.plugin.executeMethod(\"GetCurrentContentControl\");",
       "description": "<p>This method allows to get the identifier of the selected content control (i.e. the content control where the mouse cursor is currently positioned).</p>",
       "tags": {
         "typeofeditors": [
@@ -188,6 +196,7 @@
     "GetCurrentContentControlPr": {
       "memberof": "Api",
       "name": "GetCurrentContentControlPr",
+      "example": "window.Asc.plugin.executeMethod(\"GetCurrentContentControlPr\")",
       "description": "<p>Get current content control properties</p>",
       "tags": {
         "typeofeditors": [
@@ -205,6 +214,7 @@
     "SelectContentControl": {
       "memberof": "Api",
       "name": "SelectContentControl",
+      "example": "window.Asc.plugin.executeMethod(\"SelectContentControl\", [\"5_665\"]);",
       "description": "<p>Select specified content control</p>",
       "tags": {
         "typeofeditors": [
@@ -226,6 +236,7 @@
     "MoveCursorToContentControl": {
       "memberof": "Api",
       "name": "MoveCursorToContentControl",
+      "example": "window.Asc.plugin.executeMethod(\"MoveCursorToContentControl\", [\"2_839\", false])",
       "description": "<p>Move cursor to specified content control</p>",
       "tags": {
         "typeofeditors": [
@@ -258,6 +269,7 @@
     "GetSelectedText": {
       "memberof": "Api",
       "name": "GetSelectedText",
+      "example": null,
       "description": "<p>Get selection in document in text format</p>",
       "tags": {
         "typeofeditors": [
@@ -271,6 +283,7 @@
     "RemoveSelectedContent": {
       "memberof": "Api",
       "name": "RemoveSelectedContent",
+      "example": "window.Asc.plugin.executeMethod(\"RemoveSelectedContent\")",
       "description": "<p>Remove selection in document</p>",
       "tags": {
         "typeofeditors": [
@@ -288,6 +301,7 @@
     "AddComment": {
       "memberof": "Api",
       "name": "AddComment",
+      "example": null,
       "description": "<p>Add comment to document</p>",
       "tags": {
         "typeofeditors": [
@@ -315,6 +329,7 @@
     "MoveCursorToStart": {
       "memberof": "Api",
       "name": "MoveCursorToStart",
+      "example": null,
       "description": "<p>Move cursor to Start</p>",
       "tags": {
         "typeofeditors": [
@@ -335,6 +350,7 @@
     "MoveCursorToEnd": {
       "memberof": "Api",
       "name": "MoveCursorToEnd",
+      "example": null,
       "description": "<p>Move cursor to End</p>",
       "tags": {
         "typeofeditors": [
@@ -355,6 +371,7 @@
     "SearchAndReplace": {
       "memberof": "Api",
       "name": "SearchAndReplace",
+      "example": null,
       "description": "<p>Find and replace text.</p>",
       "tags": {
         "typeofeditors": [
@@ -395,6 +412,7 @@
     "GetFileHTML": {
       "memberof": "Api",
       "name": "GetFileHTML",
+      "example": "window.Asc.plugin.executeMethod(\"GetFileHTML\")",
       "description": "<p>Get file content in html format</p>",
       "tags": {
         "typeofeditors": [

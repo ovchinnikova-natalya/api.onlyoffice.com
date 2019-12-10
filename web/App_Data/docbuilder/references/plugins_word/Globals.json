@@ -3,6 +3,33 @@
     "name": "ContentControl",
     "type": [
       "Object"
+    ],
+    "example": null,
+    "props": [
+      {
+        "type": "string",
+        "name": "Tag",
+        "description": "<p>is a tag assigned to the content control. One and the same tag can be assigned to several content controls so that you can make reference to them in your code.</p>",
+        "optional": false
+      },
+      {
+        "type": "string",
+        "name": "Id",
+        "description": "<p>is a unique identifier of the content control. It can be used to search for a certain content control and make reference to it in your code.</p>",
+        "optional": false
+      },
+      {
+        "type": "ContentControlLock",
+        "name": "Lock",
+        "description": "<p>is a value that defines if it is possible to delete and/or edit the content control or not. 0 - only deleting, 1 - no deleting or editing, 2 - only editing, 3 - full access</p>",
+        "optional": false
+      },
+      {
+        "type": "string",
+        "name": "InternalId",
+        "description": "<p>is internal id of content control. It used for all operation with content controls</p>",
+        "optional": false
+      }
     ]
   },
   "ContentControlLock": {
@@ -10,6 +37,14 @@
     "description": "<p>Is a value that defines if it is possible to delete and/or edit the content control or not</p>\n<p><strong>0</strong> - only deleting\n<strong>1</strong> - disable deleting or editing\n<strong>2</strong> - only editing\n<strong>3</strong> - full access</p>",
     "type": [
       "Object"
+    ],
+    "example": null,
+    "props": [
+      {
+        "type": "0 | 1 | 2 | 3",
+        "name": "Lock",
+        "optional": false
+      }
     ]
   },
   "ContentControlType": {
@@ -17,6 +52,15 @@
     "description": "<p>Is a numeric value that specifies the content control type.</p>",
     "type": [
       "Object"
+    ],
+    "example": null,
+    "props": [
+      {
+        "type": "1 | 2 | 3 | 4",
+        "name": "type",
+        "description": "<p><strong>1</strong> - block content control <strong>2</strong> - inline content control <strong>3</strong> - row content control <strong>4</strong> - cell content control</p>",
+        "optional": false
+      }
     ]
   },
   "ContentControlPropertiesAndContent": {
@@ -24,12 +68,90 @@
     "description": "<p>Is array of properties and contents of content controls.</p>",
     "type": [
       "Object"
+    ],
+    "example": null,
+    "props": [
+      {
+        "type": "ContentControlProperties",
+        "name": "ContentControlProperties",
+        "optional": true,
+        "defaultValue": "{}"
+      },
+      {
+        "type": "string",
+        "name": "Script",
+        "description": "<p>is must be a script that will be executed to generate the data within the content control.</p>",
+        "optional": false
+      },
+      {
+        "type": "string",
+        "name": "Url",
+        "description": "<p>its must be a link to a shared file</p>",
+        "optional": false
+      }
     ]
   },
   "ContentControlProperties": {
     "name": "ContentControlProperties",
     "type": [
       "Object"
+    ],
+    "example": "{\"Id\": 100, \"Tag\": \"CC_Tag\", \"Lock\": 3}",
+    "props": [
+      {
+        "type": "string",
+        "name": "Id",
+        "description": "<p>is a unique identifier of the content control. It can be used to search for a certain content control and make reference to it in your code.</p>",
+        "optional": false
+      },
+      {
+        "type": "string",
+        "name": "Tag",
+        "description": "<p>is a tag assigned to the content control. One and the same tag can be assigned to several content controls so that you can make reference to them in your code.</p>",
+        "optional": false
+      },
+      {
+        "type": "ContentControlLock",
+        "name": "Lock",
+        "description": "<p>is a value that defines if it is possible to delete and/or edit the content control or not</p>",
+        "optional": false
+      },
+      {
+        "type": "string",
+        "name": "Alias",
+        "description": "<p>Alias</p>",
+        "optional": false
+      },
+      {
+        "type": "string",
+        "name": "Appearance",
+        "description": "<p>Appearance</p>",
+        "optional": false
+      },
+      {
+        "type": "object",
+        "name": "Color",
+        "description": "<p>Color</p>",
+        "optional": false
+      },
+      {
+        "type": "number",
+        "name": "Color.R",
+        "description": "<p>R</p>",
+        "optional": false
+      },
+      {
+        "type": "number",
+        "name": "Color.G",
+        "description": "<p>G</p>",
+        "optional": false
+      },
+      {
+        "type": "number",
+        "name": "Color.B",
+        "description": "<p>B</p>",
+        "optional": false
+      }
     ]
   }
 }

@@ -62,6 +62,36 @@
                     <td><em><%= p.Name %></em></td>
                     <td>
                         <em><%= PluginsDocumentation.JsDocParser.ParamTypeToHtml(p) %></em>
+                        <% if (p.Properties != null && p.Properties.Any()) { %>
+                        <% var hasOptionalProps = p.Properties.Any(m => m.Optional); %>
+                        <h2>Parameters:</h2>
+                        <table class="table">
+                            <thead>
+                                <tr class="tablerow">
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <% if (hasOptionalProps) { %>
+                                        <td>Default</td>
+                                    <% } %>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% foreach(var prop in p.Properties) { %>
+                                    <tr class="tablerow">
+                                        <td><em><%= prop.Name %></em></td>
+                                        <td>
+                                            <em><%= PluginsDocumentation.JsDocParser.ParamTypeToHtml(prop) %></em>
+                                        </td>
+                                        <% if (hasOptionalProps) { %>
+                                            <td><%= prop.DefaultValue == null ? (prop.Optional ? "null" : "") : prop.DefaultValue %></td>
+                                        <% } %>
+                                        <td><%= prop.Description %></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                        <% } %>
                     </td>
                     <% if (hasOptional) { %>
                         <td><%= p.DefaultValue == null ? (p.Optional ? "null" : "") : p.DefaultValue %></td>
@@ -83,12 +113,12 @@
     </dl>
     <% } %>
 
-    <% if (method.Tags != null && !string.IsNullOrEmpty(method.Tags.Example)) { %>
+    <% if (!string.IsNullOrEmpty(method.JsDocExample)) { %>
                 <h2>Example</h2>
                 <div class="button copy-code">Copy code</div>
-<pre><%= method.Tags.Example %></pre>
+<pre><%= method.JsDocExample %></pre>
 
-        <% if (!string.IsNullOrEmpty(method.Example.DemoUrl)) { %>
+        <% if (method.Example != null && !string.IsNullOrEmpty(method.Example.DemoUrl)) { %>
             <h2>Resulting document</h2>
             <iframe class="docbuilder_resulting_docs" src="<%= method.Example.DemoUrl %>" frameborder="0" scrolling="no" allowtransparency></iframe>
         <% } %>

@@ -70,6 +70,25 @@ namespace ASC.Api.Web.Help.DocumentGenerator
                         entry.Methods.ToList().ForEach(m => {
                             m.Value.Module = moduleName;
                             if (m.Value.Params != null) m.Value.Params.ToList().ForEach(p => p.Module = moduleName);
+                            if (m.Value.Params != null && m.Value.Params.Any(p => p.Name.Contains(".")))
+                            {
+                                var newParams = new List<DBParam>();
+                                foreach(var p in m.Value.Params)
+                                {
+                                    if (p.Name.Contains("."))
+                                    {
+                                        var objName = p.Name.Substring(0, p.Name.IndexOf("."));
+                                        var obj = m.Value.Params.Find(pr => pr.Name == objName);
+                                        if (obj.Properties == null) obj.Properties = new List<DBParam>();
+                                        obj.Properties.Add(p);
+                                    }
+                                    else
+                                    {
+                                        newParams.Add(p);
+                                    }
+                                }
+                                m.Value.Params = newParams;
+                            }
                         });
                         if (entry.Params != null) entry.Params.ToList().ForEach(p => p.Module = moduleName);
 
@@ -97,6 +116,7 @@ namespace ASC.Api.Web.Help.DocumentGenerator
                         foreach (var kv in content)
                         {
                             kv.Value.Module = moduleName;
+                            if (kv.Value.Properties != null) kv.Value.Properties.ToList().ForEach(p => p.Module = moduleName);
                             if (!_globals.ContainsKey(kv.Key)) _globals.Add(kv.Key, kv.Value);
                         }
                     }
@@ -542,6 +562,9 @@ namespace ASC.Api.Web.Help.DocumentGenerator
         [JsonProperty("inherits")]
         public string Inherits { get; set; }
 
+        [JsonProperty("example")]
+        public string JsDocExample { get; set; }
+
         [JsonIgnore]
         public DBExample Example { get; set; }
     }
@@ -550,9 +573,6 @@ namespace ASC.Api.Web.Help.DocumentGenerator
     {
         [JsonProperty("typeofeditors")]
         public List<string> EditorTypes { get; set; }
-
-        [JsonProperty("example")]
-        public string Example { get; set; }
     }
 
     public class DBParam : DBEntity
@@ -565,6 +585,9 @@ namespace ASC.Api.Web.Help.DocumentGenerator
 
         [JsonProperty("defaultValue")]
         public string DefaultValue { get; set; }
+
+        [JsonProperty("props")]
+        public List<DBParam> Properties { get; set; }
     }
 
     public abstract class DBEntity
@@ -593,7 +616,10 @@ namespace ASC.Api.Web.Help.DocumentGenerator
         [JsonProperty("type")]
         public List<string> Types { get; set; }
 
-        [JsonProperty("script")]
+        [JsonProperty("props")]
+        public List<DBParam> Properties { get; set; }
+
+        [JsonProperty("example")]
         public string Script { get; set; }
     }
 }

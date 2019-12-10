@@ -31,6 +31,37 @@
             </ul>
             </div>
 
+            <% if (type.Value.Properties != null && type.Value.Properties.Any()) { %>
+            <% var hasOptional = type.Value.Properties.Any(m => m.Optional); %>
+            <h2>Parameters:</h2>
+            <table class="table">
+                <thead>
+                    <tr class="tablerow">
+                        <td>Name</td>
+                        <td>Type</td>
+                        <% if (hasOptional) { %>
+                            <td>Default</td>
+                        <% } %>
+                        <td>Description</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% foreach(var p in type.Value.Properties) { %>
+                        <tr class="tablerow">
+                            <td><em><%= p.Name %></em></td>
+                            <td>
+                                <em><%= PluginsDocumentation.JsDocParser.ParamTypeToHtml(p) %></em>
+                            </td>
+                            <% if (hasOptional) { %>
+                                <td><%= p.DefaultValue == null ? (p.Optional ? "null" : "") : p.DefaultValue %></td>
+                            <% } %>
+                            <td><%= p.Description %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+            <% } %>
+
             <% if (!string.IsNullOrEmpty(type.Value.Script)) { %>
                 <h2>Example</h2>
                 <div class="button copy-code">Copy code</div>
