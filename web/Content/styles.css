@@ -197,6 +197,21 @@ html {
     width: 100%;
 }
 
+.table.va-top td {
+    vertical-align: text-top;
+}
+.table.props td {
+    padding: 0;
+    padding-bottom: 5px;
+}
+.table.props thead td {
+    font-size: 14px;
+}
+.table.props td em, .table.props td p {
+    font-size: 12px;
+    margin: 0px;
+}
+
 .table td {
     border: medium none;
     vertical-align: middle;

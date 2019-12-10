@@ -45,7 +45,7 @@
     <% if (method.Params != null && method.Params.Any()) { %>
     <% var hasOptional = method.Params.Any(m => m.Optional); %>
     <h2>Parameters:</h2>
-    <table class="table">
+    <table class="table va-top">
         <thead>
             <tr class="tablerow">
                 <td>Name</td>
@@ -62,12 +62,17 @@
                     <td><em><%= p.Name %></em></td>
                     <td>
                         <em><%= PluginsDocumentation.JsDocParser.ParamTypeToHtml(p) %></em>
+                    </td>
+                    <% if (hasOptional) { %>
+                        <td><%= p.DefaultValue == null ? (p.Optional ? "null" : "") : p.DefaultValue %></td>
+                    <% } %>
+                    <td>
+                        <%= p.Description %>
                         <% if (p.Properties != null && p.Properties.Any()) { %>
                         <% var hasOptionalProps = p.Properties.Any(m => m.Optional); %>
-                        <h2>Parameters:</h2>
-                        <table class="table">
+                        <table class="table props">
                             <thead>
-                                <tr class="tablerow">
+                                <tr>
                                     <td>Name</td>
                                     <td>Type</td>
                                     <% if (hasOptionalProps) { %>
@@ -78,13 +83,13 @@
                             </thead>
                             <tbody>
                                 <% foreach(var prop in p.Properties) { %>
-                                    <tr class="tablerow">
-                                        <td><em><%= prop.Name %></em></td>
+                                    <tr>
+                                        <td><p><%= prop.Name %></p></td>
                                         <td>
                                             <em><%= PluginsDocumentation.JsDocParser.ParamTypeToHtml(prop) %></em>
                                         </td>
                                         <% if (hasOptionalProps) { %>
-                                            <td><%= prop.DefaultValue == null ? (prop.Optional ? "null" : "") : prop.DefaultValue %></td>
+                                            <td><em><%= prop.DefaultValue == null ? (prop.Optional ? "null" : "") : prop.DefaultValue %></em></td>
                                         <% } %>
                                         <td><%= prop.Description %></td>
                                     </tr>
@@ -93,10 +98,6 @@
                         </table>
                         <% } %>
                     </td>
-                    <% if (hasOptional) { %>
-                        <td><%= p.DefaultValue == null ? (p.Optional ? "null" : "") : p.DefaultValue %></td>
-                    <% } %>
-                    <td><%= p.Description %></td>
                 </tr>
             <% } %>
         </tbody>
