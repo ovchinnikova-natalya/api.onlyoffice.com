@@ -221,4 +221,7 @@
     <li>
         <a href="<%= Url.Action("troubleshooting") %>">Troubleshooting</a>
     </li>
+    <li>
+        <a href="<%= Url.Action("testform") %>">Test Form</a>
+    </li>
 </ul>

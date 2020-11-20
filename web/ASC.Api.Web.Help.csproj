@@ -442,6 +442,7 @@
     <Content Include="Views\Editors\Signature\Request.ascx" />
     <Content Include="Views\Editors\Signature\Browser.ascx" />
     <Content Include="Views\Editors\Signature\Default.ascx" />
+    <Content Include="Views\Editors\testform.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Plugin\Basic.aspx" />
     <Content Include="Views\Plugin\Config.aspx" />
@@ -637,7 +638,7 @@
     <Content Include="Views\Shared\Analytic.ascx" />
   </ItemGroup>
   <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">16.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
