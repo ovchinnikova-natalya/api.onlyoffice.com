@@ -34,7 +34,6 @@
     <button id="permissionButton" class="button button-upper">permissions</button>
 
     <div id="permissionConfig" hidden="hidden">
-
         <input type="checkbox" class="permissionChecks" value="comment">comment<br>
         <input type="checkbox" class="permissionChecks" value="copy">copy<br>
         <input type="checkbox" class="permissionChecks" value="download">download<br>
@@ -44,6 +43,24 @@
         <input type="checkbox" class="permissionChecks" value="modifyFilter">modifyFilter<br>
         <input type="checkbox" class="permissionChecks" value="print">print<br>
         <input type="checkbox" class="permissionChecks" value="review">review<br>
+    </div>
+
+
+    <br />
+    <br />
+
+    <button id="customizationButton" class="button button-upper">customization</button>
+
+    <div id="customizationConfig" hidden="hidden">
+        <input type="checkbox" class="customizationChecks" value="autosave">autosave<br>
+        <input type="checkbox" class="customizationChecks" value="chat">chat<br>
+        <input type="checkbox" class="customizationChecks" value="commentAuthorOnly">commentAuthorOnly<br>
+        <input type="checkbox" class="customizationChecks" value="comments">comments<br>
+        <input type="checkbox" class="customizationChecks" value="compactHeader">compactHeader<br>
+        <input type="checkbox" class="customizationChecks" value="compactToolbar">compactToolbar<br>
+        <input type="checkbox" class="customizationChecks" value="compatibleFeatures">compatibleFeatures<br>
+        <input type="checkbox" class="customizationChecks" value="macros">macros<br>
+        <input type="checkbox" class="customizationChecks" value="plugins">plugins<br>
     </div>
 
     <br />
@@ -84,9 +101,20 @@
             modifyFilterBool: false,
             printBool: false,
             reviewBool: false
-        }
+        }  // users permissions in editor
+        var customization = {
+            autosave: false,
+            chat: false,
+            commentAuthorOnly: false,
+            comments: false,
+            compactHeader: false,
+            compactToolbar: false,
+            compatibleFeatures: false,
+            macros: false,
+            plugins: false,
+        } // users customization in editor
 
-        document.getElementById("permissionButton").onclick = function () {   
+        document.getElementById("permissionButton").onclick = function () {
             if (document.getElementById("permissionConfig").hidden == "") {
                 document.getElementById("permissionConfig").hidden = "hidden";
             }
@@ -95,6 +123,16 @@
             }
 
         }   // hide and show permission list
+
+        document.getElementById("customizationButton").onclick = function () {
+            if (document.getElementById("customizationConfig").hidden == "") {
+                document.getElementById("customizationConfig").hidden = "hidden";
+            }
+            else {
+                document.getElementById("customizationConfig").hidden = "";
+            }
+
+        }   // hide and show customization list
 
         function GetDocType() {
             selectDoc = document.getElementById("chooseAndCreateDocument");
@@ -136,6 +174,26 @@
             }
         }
 
+        function GetCustomization() {
+            let tmp = document.getElementsByClassName("customizationChecks");
+            for (var i = 0; i < tmp.length; i++) {
+                if (tmp[i].checked == true) {
+                    switch (tmp[i].value) {
+                        case "autosave": customization.autosave = true; break;
+                        case "chat": customization.chat = true; break;
+                        case "commentAuthorOnly": customization.commentAuthorOnly = true; break;
+                        case "comments": customization.comments = true; break;
+                        case "compactHeader": customization.compactHeader = true; break;
+                        case "compactToolbar": customization.compactToolbar = true; break;
+                        case "compatibleFeatures": customization.compatibleFeatures = true; break;
+                        case "macros": customization.macros = true; break;
+                        case "plugins": customization.plugins = true; break;
+                        default: break;
+                    }
+                }
+            }
+        }
+
         function CreateEditor() {
             key = Math.random().toString(36).slice(-8);
             window.docEditor = new DocsAPI.DocEditor("placeholder",
@@ -146,27 +204,40 @@
                         "key": "" + key,
                         "title": title + "." + selectedOption,
                         "url": "<%= ConfigurationManager.AppSettings["storage_demo_url"] ?? "" %>" + "demo." + selectedOption,
-                        "permissions": {
+                            "permissions": {
 
-                            "comment": permissions.commentBool,
-                            "copy": permissions.copyBool,
-                            "download": permissions.downloadBool,
-                            "edit": permissions.editBool,
-                            "fillForms": permissions.fillFormsBool,
-                            "modifyContentControl": permissions.modifyContentControlBool,
-                            "modifyFilter": permissions.modifyFilterBool,
-                            "print": permissions.printBool,
-                            "review": permissions.reviewBool
-                        }
-                    },
-                    "editorConfig": {
-                        "user": { "name": userName }
-                    },
-                    "documentType": documentType,
-                    "height": "1200px",
-                    "width": "1000px"
-                }
-            );
+                                "comment": permissions.commentBool,
+                                "copy": permissions.copyBool,
+                                "download": permissions.downloadBool,
+                                "edit": permissions.editBool,
+                                "fillForms": permissions.fillFormsBool,
+                                "modifyContentControl": permissions.modifyContentControlBool,
+                                "modifyFilter": permissions.modifyFilterBool,
+                                "print": permissions.printBool,
+                                "review": permissions.reviewBool
+                            }
+                        },
+                        "editorConfig": {
+                            "user": {
+                                "name": userName
+                            },
+                            "customization": {
+                                "autosave": customization.autosave,
+                                "chat": customization.chat,
+                                "commentAuthorOnly": customization.commentAuthorOnly,
+                                "comments": customization.comments,
+                                "compactHeader": customization.compactHeader,
+                                "compactToolbar": customization.compactToolbar,
+                                "compatibleFeatures": customization.compatibleFeatures,
+                                "macros": customization.macros,
+                                "plugins": customization.plugins
+                            }
+                        },
+                        "documentType": documentType,
+                        "height": "1200px",
+                        "width": "1000px"
+                    }
+                );
         }
 
         function SetDefaultValues() {
@@ -174,10 +245,17 @@
             document.getElementById('inputUserName').value = "";
             document.getElementById('inputDocTitle').value = "";
             document.getElementById("permissionConfig").hidden = "hidden"
-            let tmp = document.getElementsByClassName("permissionChecks");
-            for (var i = 0; i < tmp.length; i++) {
-                tmp[i].checked = false;
+            let permChecks = document.getElementsByClassName("permissionChecks");
+            for (var i = 0; i < permChecks.length; i++) {
+                permChecks[i].checked = false;
             }
+            permissions.commentBool = permissions.copyBool = permissions.downloadBool = permissions.editBool = permissions.fillFormsBool = permissions.modifyContentControlBool = permissions.modifyFilterBool = permissions.printBool = permissions.reviewBool = false;
+            document.getElementById("customizationConfig").hidden = "hidden"
+            let customChecks = document.getElementsByClassName("customizationChecks");
+            for (var i = 0; i < customChecks.length; i++) {
+                customChecks[i].checked = false;
+            }            
+            customization.autosave = customization.chat = customization.commentAuthorOnly = customization.comments = customization.compactHeader = customization.compactToolbar = customization.compatibleFeatures = customization.macros = customization.plugins =false;            
         }  // after creating editor reset all values in form
 
         document.getElementById("chooseAndCreateDocument").onchange = function () {
@@ -189,6 +267,7 @@
             GetTitle();
             EditorUserName();
             GetPermissions();
+            GetCustomization();
 
             CreateEditor();
 
