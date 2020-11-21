@@ -5,84 +5,198 @@
     Inherits="System.Web.Mvc.ViewPage"
     ContentType="text/html" %>
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     New page
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+
     <h1>
-        <span class="hdr">Test Form</span>
+        <span class="hdr">Creating an editor</span>
     </h1>
-    
-    <select name="create" class="button button-upper" id="Open">
-        <option selected="selected" disabled >Create</option>
+
+    <select id="chooseAndCreateDocument" class="button button-upper" name="create">
+        <option selected="selected" disabled>Create</option>
         <option value="docx">docx</option>
         <option value="xlsx">xlsx</option>
         <option value="pptx">pptx</option>
     </select>
-    
-    <hr color="white"/>
+
+    <br />
+    <br />
+
+
+
+
+
+    <button id="permissionButton" class="button button-upper">permissions</button>
+
+    <div id="permissionConfig" hidden="hidden">
+
+        <input type="checkbox" class="permissionChecks" value="comment">comment<br>
+        <input type="checkbox" class="permissionChecks" value="copy">copy<br>
+        <input type="checkbox" class="permissionChecks" value="download">download<br>
+        <input type="checkbox" class="permissionChecks" value="edit">edit<br>
+        <input type="checkbox" class="permissionChecks" value="fillForms">fillForms<br>
+        <input type="checkbox" class="permissionChecks" value="modifyContentControl">modifyContentControl<br>
+        <input type="checkbox" class="permissionChecks" value="modifyFilter">modifyFilter<br>
+        <input type="checkbox" class="permissionChecks" value="print">print<br>
+        <input type="checkbox" class="permissionChecks" value="review">review<br>
+    </div>
+
+    <br />
+    <br />
+
     <label>Document title</label>
-    <input  type="text" class="input1" id="in1" />
+    <input id="inputDocTitle" type="text" class="input1" />
 
     <label>User name</label>
-    <input type="text" class="input2" id="in2" />
+    <input id="inputUserName" type="text" class="input2" />
 
     <div id="placeholder"></div>
 
 </asp:Content>
 
 
+
+
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptPlaceholder" runat="server">
 
     <script id="scriptApi" type="text/javascript" src="<%= ConfigurationManager.AppSettings["editor_url"] ?? "" %>/web-apps/apps/api/documents/api.js"></script>
 
-
-
-    <% var ext = Request["type"] == "spreadsheet" ? "xlsx" : Request["type"] == "presentation" ? "pptx" : "docx"; %>
     <script type="text/javascript">
-        document.getElementById("Open").onchange = function () {
-            if (!document.getElementById("placeholder"))
-                docEditor.destroyEditor();
-            var a = document.getElementById("Open");
-            var b = a.options[a.selectedIndex].text;
-            switch (b) {
-                case "docx": var type1 = "text"; break;
-                case "xlsx": var type1 = "spreadsheet"; break;
-                case "pptx": var type1 = "presentation"; break;
-            }
-            if (document.getElementById('in1').value == "") {
-                var title = "default";
+
+        var title = "default"; // editors title
+        var selectDoc; // select in html for  (docx , xlxs , pptx)
+        var selectedOption; // docx , xlxs , pptx
+        var documentType; // text , spreadsheet ,presentation
+        var userName; // user name in editor
+        var key; // unique editors key
+        var permissions = {
+            commentBool: false,
+            copyBool: false,
+            downloadBool: false,
+            editBool: false,
+            fillFormsBool: false,
+            modifyContentControlBool: false,
+            modifyFilterBool: false,
+            printBool: false,
+            reviewBool: false
+        }
+
+        document.getElementById("permissionButton").onclick = function () {   
+            if (document.getElementById("permissionConfig").hidden == "") {
+                document.getElementById("permissionConfig").hidden = "hidden";
             }
             else {
-                title = document.getElementById('in1').value;
+                document.getElementById("permissionConfig").hidden = "";
             }
-            var name = document.getElementById('in2').value;
-            var key = Math.random().toString(36).slice(-8);
+
+        }   // hide and show permission list
+
+        function GetDocType() {
+            selectDoc = document.getElementById("chooseAndCreateDocument");
+            selectedOption = selectDoc.options[selectDoc.selectedIndex].text;
+            switch (selectedOption) {
+                case "xlsx": documentType = "spreadsheet"; break;
+                case "pptx": documentType = "presentation"; break;
+                default: documentType = "text"; break;
+            }
+        }
+
+        function GetTitle() {
+            if (document.getElementById('inputDocTitle').value != "") {
+                title = document.getElementById('inputDocTitle').value;
+            }
+        }
+
+        function EditorUserName() {
+            userName = document.getElementById('inputUserName').value;
+        }
+
+        function GetPermissions() {
+            let tmp = document.getElementsByClassName("permissionChecks");
+            for (var i = 0; i < tmp.length; i++) {
+                if (tmp[i].checked == true) {
+                    switch (tmp[i].value) {
+                        case "comment": permissions.commentBool = true; break;
+                        case "copy": permissions.copyBool = true; break;
+                        case "download": permissions.downloadBool = true; break;
+                        case "edit": permissions.editBool = true; break;
+                        case "fillForms": permissions.fillFormsBool = true; break;
+                        case "modifyContentControl": permissions.modifyContentControlBool = true; break;
+                        case "modifyFilter": permissions.modifyFilterBool = true; break;
+                        case "print": permissions.printBool = true; break;
+                        case "review": permissions.reviewBool = true; break;
+                        default: break;
+                    }
+                }
+            }
+        }
+
+        function CreateEditor() {
+            key = Math.random().toString(36).slice(-8);
             window.docEditor = new DocsAPI.DocEditor("placeholder",
                 {
                     "document":
                     {
-                        "fileType": b,
+                        "fileType": selectedOption,
                         "key": "" + key,
-                        "title": title + "." + b,
-                        "url": "https:\/\/d2nlctn12v279m.cloudfront.net\/assets\/docs\/samples\/demo." + b
+                        "title": title + "." + selectedOption,
+                        "url": "<%= ConfigurationManager.AppSettings["storage_demo_url"] ?? "" %>" + "demo." + selectedOption,
+                        "permissions": {
+
+                            "comment": permissions.commentBool,
+                            "copy": permissions.copyBool,
+                            "download": permissions.downloadBool,
+                            "edit": permissions.editBool,
+                            "fillForms": permissions.fillFormsBool,
+                            "modifyContentControl": permissions.modifyContentControlBool,
+                            "modifyFilter": permissions.modifyFilterBool,
+                            "print": permissions.printBool,
+                            "review": permissions.reviewBool
+                        }
                     },
-                    "editorConfig":
-                    {
-                        "user": { "name": name }
+                    "editorConfig": {
+                        "user": { "name": userName }
                     },
-                    "documentType": type1,
+                    "documentType": documentType,
                     "height": "1200px",
                     "width": "1000px"
                 }
             );
-            document.getElementById("Open").selectedIndex = 0;
-            document.getElementById('in2').value = "";
-            document.getElementById('in1').value = "";
         }
+
+        function SetDefaultValues() {
+            document.getElementById("chooseAndCreateDocument").selectedIndex = 0;
+            document.getElementById('inputUserName').value = "";
+            document.getElementById('inputDocTitle').value = "";
+            document.getElementById("permissionConfig").hidden = "hidden"
+            let tmp = document.getElementsByClassName("permissionChecks");
+            for (var i = 0; i < tmp.length; i++) {
+                tmp[i].checked = false;
+            }
+        }  // after creating editor reset all values in form
+
+        document.getElementById("chooseAndCreateDocument").onchange = function () {
+            if (window.docEditor) {
+                docEditor.destroyEditor();
+            }
+
+            GetDocType();
+            GetTitle();
+            EditorUserName();
+            GetPermissions();
+
+            CreateEditor();
+
+            SetDefaultValues();
+        }  // create editor with users config
     </script>
 
-
 </asp:Content>
+
+
+
