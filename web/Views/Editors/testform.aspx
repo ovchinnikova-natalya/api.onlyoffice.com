@@ -28,8 +28,10 @@
         <span class="hdr">Creating an editor</span>
     </h1>
 
+   
+
     <select id="chooseAndCreateDocument" class="button button-upper" name="create">
-        <option selected="selected" disabled>Create</option>
+        <option selected="selected" disabled>choose doc type</option>
         <option value="docx">docx</option>
         <option value="xlsx">xlsx</option>
         <option value="pptx">pptx</option>
@@ -41,16 +43,20 @@
 
     <button id="permissionButton" class="button button-upper">permissions</button>
 
-    <div id="permissionConfig" hidden="hidden">
-        <input type="checkbox" class="permissionChecks" value="comment">comment<br>
+    <div id="permissionConfig" hidden="hidden">        
         <input type="checkbox" class="permissionChecks" value="copy">copy<br>
         <input type="checkbox" class="permissionChecks" value="download">download<br>
-        <input type="checkbox" class="permissionChecks" value="edit">edit<br>
-        <input type="checkbox" class="permissionChecks" value="fillForms">fillForms<br>
-        <input type="checkbox" class="permissionChecks" value="modifyContentControl">modifyContentControl<br>
-        <input type="checkbox" class="permissionChecks" value="modifyFilter">modifyFilter<br>
+        <input type="checkbox" class="permissionChecks" value="edit">edit<br>        
         <input type="checkbox" class="permissionChecks" value="print">print<br>
-        <input type="checkbox" class="permissionChecks" value="review">review<br>
+        <div id="documentHiddenPerm" >
+            <input type="checkbox" class="permissionChecks" value="comment">comment<br>
+            <input type="checkbox" class="permissionChecks" value="modifyContentControl">modifyContentControl<br>
+            <input type="checkbox" class="permissionChecks" value="fillForms">fillForms<br>
+            <input type="checkbox" class="permissionChecks" value="review">review<br>
+        </div>  
+        <div id="xlsxHiddenPerm" hidden="hidden">
+            <input type="checkbox" class="permissionChecks" value="modifyFilter">modifyFilter<br>
+        </div>
     </div>
 
 
@@ -59,7 +65,7 @@
 
     <button id="customizationButton" class="button button-upper">customization</button>
 
-    <div id="customizationConfig" hidden="hidden">
+    <div id="customizationConfig" hidden="hidden"> 
         <input type="checkbox" class="customizationChecks" value="autosave">autosave<br>
         <input type="checkbox" class="customizationChecks" value="chat">chat<br>
         <input type="checkbox" class="customizationChecks" value="commentAuthorOnly">commentAuthorOnly<br>
@@ -68,14 +74,26 @@
         <input type="checkbox" class="customizationChecks" value="compactToolbar">compactToolbar<br>
         <input type="checkbox" class="customizationChecks" value="compatibleFeatures">compatibleFeatures<br>
         <input id="macro" type="checkbox" class="customizationChecks" value="macros">macros<br>
-        <div id="macrosModeList" hidden="hidden">
+        <div id="macrosModeList" hidden="hidden">            
+            <select id="macroChoose" class="button" hidden="hidden">
+                <option selected="selected" disabled>Choose macros mode</option>
+                <option value="original">original</option>
+                <option value="warn">warn</option>
+                <option value="disable">disable</option>
+                <option value="enable">enable</option>
+            </select>
             <br />
-            <label>Choose macros mode:</label>
             <br />
-            <input type="checkbox" class="macrosModeChecks" value="original">original<br>
-            <input type="checkbox" class="macrosModeChecks" value="warn">warn<br>
-            <input type="checkbox" class="macrosModeChecks" value="disable">disable<br>
-            <input type="checkbox" class="macrosModeChecks" value="enable">enable<br>
+        </div>
+        <input id="unit" type="checkbox" class="customizationChecks" value="unit">unit<br>
+        <div id="unitList" hidden="hidden">               
+            <select id="unitChoose" class="button"  hidden="hidden">
+                <option selected="selected" disabled>choose unit</option>
+                <option value="cm">cm</option>
+                <option value="pt">pt</option>
+                <option value="inch">inch</option>
+            </select>
+            <br />
             <br />
         </div>
         <input type="checkbox" class="customizationChecks" value="plugins">plugins<br>
@@ -91,7 +109,16 @@
     <label>User name</label>
     <input id="inputUserName" type="text" />
 
+    <button id="createEditorButton" class="button button-upper">Create editor</button>
+    <br />
+    <br />
     <div id="placeholder"></div>
+    <br />
+    <br />
+    <button id="showCodeButton" class="button button-upper">Show editors config</button>
+    <div id="printCode">
+        <p id="codeText"></p>
+    </div>
 
 </asp:Content>
 

@@ -1,10 +1,10 @@
 ﻿$(function () {
     var title = "default"; // editors title
     var selectDoc; // select in html for  (docx , xlxs , pptx)
-    var selectedOption; // docx , xlxs , pptx
-    var documentType; // text , spreadsheet ,presentation
-    var userName; // user name in editor
-    var key; // unique editors key
+    var selectedOption = "docx"; // docx , xlxs , pptx
+    var documentType = "text"; // text , spreadsheet ,presentation
+    var userName = ""; // user name in editor
+    var key = ""; // unique editors key
     var permissions = {
         commentBool: false,
         copyBool: false,
@@ -29,6 +29,8 @@
         help: false
     } // users customization in editor
     var macroMode = "original";
+    var unit = "cm";
+
 
     document.getElementById("permissionButton").onclick = function () {
         if (document.getElementById("permissionConfig").hidden == "") {
@@ -55,17 +57,30 @@
         else {
             document.getElementById("macrosModeList").hidden = "";
         }
-    }   // hide and show permission list
+    }   // hide and show macros mode list
 
-    function GetDocType() {
+    document.getElementById("unit").onclick = function () {
+        if (document.getElementById("unitList").hidden == "") {
+            document.getElementById("unitList").hidden = "hidden";
+        }
+        else {
+            document.getElementById("unitList").hidden = "";
+        }
+    }   // hide and show unit list
+
+    document.getElementById("chooseAndCreateDocument").onchange = function () {
+        let tmp1 = document.getElementById("documentHiddenPerm");
+        let tmp2 = document.getElementById("xlsxHiddenPerm");
         selectDoc = document.getElementById("chooseAndCreateDocument");
         selectedOption = selectDoc.options[selectDoc.selectedIndex].text;
         switch (selectedOption) {
-            case "xlsx": documentType = "spreadsheet"; break;
-            case "pptx": documentType = "presentation"; break;
-            default: documentType = "text"; break;
+            case "xlsx": documentType = "spreadsheet"; tmp2.hidden = ""; tmp1.hidden = "hidden"; break;
+            case "pptx": documentType = "presentation"; tmp1.hidden = tmp2.hidden = "hidden"; break;
+            default: tmp1.hidden = ""; tmp2 = "hidden"; break;
         }
-    }
+    } //hide and show some special advanced parametres
+
+
 
     function GetTitle() {
         if (document.getElementById('inputDocTitle').value != "") {
@@ -78,18 +93,26 @@
     }
 
     function GetMacroMode() {
-        if (document.getElementById("marco").checked == true) {
-            let tmpMacro = document.getElementsByClassName("macrosModeChecks");
-            for (var i = 0; i < tmpMacro.length; i++) {
-                if (tmpMacro[i].checked == true) {
-                    switch (tmpMacro[i].value) {
-                        case "enable": macroMode = "enable"; break;
-                        case "warn": macroMode = "warn"; break;
-                        case "disable": macroMode = "disable"; break;
-                        case "original": break;                           
-                    }
-                }
+        if (document.getElementById("macro").checked == true) {
+            let tmpMacro = document.getElementById("macroChoose");
+            switch (tmpMacro.options[selectDoc.selectedIndex].text) {
+                case "enable": macroMode = "enable"; break;
+                case "warn": macroMode = "warn"; break;
+                case "disable": macroMode = "disable"; break;
+                case "original": break;
             }
+        }
+    }
+
+    function GetUnit() {
+        if (document.getElementById("unit").checked == true) {
+            let tmpUnit = document.getElementById("unitChoose");
+            switch (tmpUnit.options[selectDoc.selectedIndex].text) {
+                case "pt": unit = "pt"; break;
+                case "inch": unit = "inch"; break;
+                case "cm": break;
+            }
+
         }
     }
 
@@ -133,6 +156,77 @@
             }
         }
         GetMacroMode();
+        GetUnit();
+    }
+
+    document.getElementById("showCodeButton").onclick = function () {
+        let text = document.getElementById("codeText");
+        if (text.innerHTML == "") {
+            text.innerHTML = 'docEditor = new DocsAPI.DocEditor("placeholder", <br>';
+            text.innerHTML = text.innerHTML + '{<br>';
+            text.innerHTML = text.innerHTML + "    ";
+            text.innerHTML = text.innerHTML + '&nbsp&nbsp "document":<br>';
+            text.innerHTML = text.innerHTML + '&nbsp&nbsp {<br>';
+
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp "fileType": ${selectedOption},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp "key": ${key},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp "title": ${title}.${selectedOption},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp "url": ${storage_demo_url}demo.${selectedOption},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp "permissions":&nbsp{<br>`;
+
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "copy": ${permissions.copyBool},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "download": ${permissions.downloadBool},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "edit": ${permissions.editBool},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "print": ${permissions.printBool},<br>`;
+            if (selectedOption == "xlsx") {
+                text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "modifyFilter": ${permissions.modifyFilterBool},<br>`;
+            }
+            if (selectedOption == "docx") {
+                text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "modifyContentControl": ${permissions.modifyContentControlBool},<br>`;
+                text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "comment": ${permissions.commentBool},<br>`;
+                text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "fillForms": ${permissions.fillFormsBool},<br>`;
+                text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "review": ${permissions.reviewBool},<br>`;
+            }
+
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp }<br>`;
+
+            text.innerHTML = text.innerHTML + '&nbsp&nbsp },<br>';
+            text.innerHTML = text.innerHTML + '&nbsp&nbsp "editorConfig":&nbsp{<br>';
+
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp "user":&nbsp{<br>`;
+
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "name": ${userName}<br>`;
+
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp },<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp "customization":&nbsp{<br>`;
+
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "autosave": ${customization.autosave},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "chat": ${customization.chat},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "commentAuthorOnly": ${customization.commentAuthorOnly},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "comments": ${customization.comments},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "compactHeader": ${customization.compactHeader},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "compactToolbar": ${customization.compactToolbar},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "compatibleFeatures": ${customization.compatibleFeatures},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "macros": ${customization.macros},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "plugins": ${customization.plugins},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "help": ${customization.help},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "macrosMode": ${macroMode},<br>`;
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "unit": ${unit},<br>`;
+
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp&nbsp&nbsp }<br>`;
+
+            text.innerHTML = text.innerHTML + '&nbsp&nbsp },<br>';
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp "documentType": ${documentType},<br>`;
+            text.innerHTML = text.innerHTML + '&nbsp&nbsp "height": "1200px",<br>';
+            text.innerHTML = text.innerHTML + '&nbsp&nbsp "width": "1000px"<br>';
+
+            text.innerHTML = text.innerHTML + '}<br>';
+
+            text.innerHTML = text.innerHTML + ');<br>';
+        }
+        else {
+            text.innerHTML = "";
+        }
     }
 
     function CreateEditor() {
@@ -146,7 +240,6 @@
                     "title": title + "." + selectedOption,
                     "url": storage_demo_url + "demo." + selectedOption,
                     "permissions": {
-
                         "comment": permissions.commentBool,
                         "copy": permissions.copyBool,
                         "download": permissions.downloadBool,
@@ -173,7 +266,8 @@
                         "macros": customization.macros,
                         "plugins": customization.plugins,
                         "help": customization.help,
-                        "macrosMode": macroMode
+                        "macrosMode": macroMode,
+                        "unit": unit
                     }
                 },
                 "documentType": documentType,
@@ -184,7 +278,12 @@
     }
 
     function SetDefaultValues() {
+        document.getElementById("codeText").innerHTML = "";
+        document.getElementById("xlsxHiddenPerm").hidden = "hidden";
+        document.getElementById("documentHiddenPerm").hidden = "";
         document.getElementById("chooseAndCreateDocument").selectedIndex = 0;
+        document.getElementById("macroChoose").selectedIndex = 0;
+        document.getElementById("unitChoose").selectedIndex = 0;
         document.getElementById('inputUserName').value = "";
         document.getElementById('inputDocTitle').value = "";
         document.getElementById("permissionConfig").hidden = "hidden"
@@ -199,19 +298,18 @@
             customChecks[i].checked = false;
         }
         customization.autosave = customization.chat = customization.commentAuthorOnly = customization.comments = customization.compactHeader = customization.compactToolbar = customization.compatibleFeatures = customization.macros = customization.plugins = customization.help = false;
+        macroMode = "original";
         document.getElementById("macrosModeList").hidden = "hidden";
-        let macrosModeChecks = document.getElementsByClassName("macrosModeChecks");        
-        for (var i = 0; i < macrosModeChecks.length; i++) {
-            macrosModeChecks[i].checked = false;
-        }
+        macroMode = "original";
+        document.getElementById("unitList").hidden = "hidden";
     }  // after creating editor reset all values in form
 
-    document.getElementById("chooseAndCreateDocument").onchange = function () {
+    document.getElementById("createEditorButton").onclick = function () {
         if (window.docEditor) {
             docEditor.destroyEditor();
+            SetDefaultValues();
         }
 
-        GetDocType();
         GetTitle();
         EditorUserName();
         GetPermissions();
@@ -219,6 +317,6 @@
 
         CreateEditor();
 
-        SetDefaultValues();
+
     }  // create editor with users config
 });
