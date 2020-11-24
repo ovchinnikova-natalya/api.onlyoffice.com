@@ -30,7 +30,7 @@
     } // users customization in editor
     var macroMode = "original";
     var unit = "cm";
-
+    var sJWT = ""; // token
 
     document.getElementById("permissionButton").onclick = function () {
         if (document.getElementById("permissionConfig").hidden == "") {
@@ -80,8 +80,6 @@
         }
     } //hide and show some special advanced parametres
 
-
-
     function GetTitle() {
         if (document.getElementById('inputDocTitle').value != "") {
             title = document.getElementById('inputDocTitle').value;
@@ -95,7 +93,7 @@
     function GetMacroMode() {
         if (document.getElementById("macro").checked == true) {
             let tmpMacro = document.getElementById("macroChoose");
-            switch (tmpMacro.options[selectDoc.selectedIndex].text) {
+            switch (tmpMacro.options[tmpMacro.selectedIndex].text) {
                 case "enable": macroMode = "enable"; break;
                 case "warn": macroMode = "warn"; break;
                 case "disable": macroMode = "disable"; break;
@@ -107,7 +105,7 @@
     function GetUnit() {
         if (document.getElementById("unit").checked == true) {
             let tmpUnit = document.getElementById("unitChoose");
-            switch (tmpUnit.options[selectDoc.selectedIndex].text) {
+            switch (tmpUnit.options[tmpUnit.selectedIndex].text) {
                 case "pt": unit = "pt"; break;
                 case "inch": unit = "inch"; break;
                 case "cm": break;
@@ -218,7 +216,8 @@
             text.innerHTML = text.innerHTML + '&nbsp&nbsp },<br>';
             text.innerHTML = text.innerHTML + `&nbsp&nbsp "documentType": ${documentType},<br>`;
             text.innerHTML = text.innerHTML + '&nbsp&nbsp "height": "1200px",<br>';
-            text.innerHTML = text.innerHTML + '&nbsp&nbsp "width": "1000px"<br>';
+            text.innerHTML = text.innerHTML + '&nbsp&nbsp "width": "1000px",<br>';
+            text.innerHTML = text.innerHTML + `&nbsp&nbsp "token": ${sJWT}<br>`;
 
             text.innerHTML = text.innerHTML + '}<br>';
 
@@ -229,8 +228,55 @@
         }
     }
 
+    function GenerateToken() {
+        var oHeader = { alg: 'HS256', typ: 'JWT' };
+        var sHeader = JSON.stringify(oHeader);
+        var oPayLoad = {};
+        oPayLoad.document = {
+            fileType: selectedOption,
+            key: key,
+            title: title + "." + selectedOption,
+            url: storage_demo_url + "demo." + selectedOption,
+            permissions: {
+                comment: permissions.commentBool,
+                copy: permissions.copyBool,
+                download: permissions.downloadBool,
+                edit: permissions.editBool,
+                fillForms: permissions.fillFormsBool,
+                modifyContentControl: permissions.modifyContentControlBool,
+                modifyFilter: permissions.modifyFilterBool,
+                print: permissions.printBool,
+                review: permissions.reviewBool
+            }
+        };
+        oPayLoad.editorConfig = {
+            user: { name: userName },
+            customization: {
+                autosave: customization.autosave,
+                chat: customization.chat,
+                commentAuthorOnly: customization.commentAuthorOnly,
+                comments: customization.comments,
+                compactHeader: customization.compactHeader,
+                compactToolbar: customization.compactToolbar,
+                compatibleFeatures: customization.compatibleFeatures,
+                macros: customization.macros,
+                plugins: customization.plugins,
+                help: customization.help,
+                macrosMode: macroMode,
+                unit: unit
+            }
+        };
+        oPayLoad.documentType = documentType;
+        oPayLoad.height = "1200px";
+        oPayLoad.width = "1000px";
+        var sPayload = JSON.stringify(oPayLoad);
+        sJWT = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, { utf8: secret });
+        console.log(sJWT);
+    }
+
     function CreateEditor() {
         key = Math.random().toString(36).slice(-8);
+        GenerateToken();
         window.docEditor = new DocsAPI.DocEditor("placeholder",
             {
                 "document":
@@ -272,7 +318,8 @@
                 },
                 "documentType": documentType,
                 "height": "1200px",
-                "width": "1000px"
+                "width": "1000px",
+                "token": sJWT
             }
         );
     }
@@ -316,7 +363,5 @@
         GetCustomization();
 
         CreateEditor();
-
-
     }  // create editor with users config
 });

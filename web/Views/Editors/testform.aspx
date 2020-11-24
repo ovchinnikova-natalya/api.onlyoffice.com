@@ -7,28 +7,27 @@
 
 <%@ Import Namespace="System.Web.Optimization" %>
 
-
 <asp:Content ID="FaqHead" ContentPlaceHolderID="HeadContent" runat="server">
     <script id="scriptApi" type="text/javascript" src="<%= ConfigurationManager.AppSettings["editor_url"] ?? "" %>/web-apps/apps/api/documents/api.js"></script>
     <%= Scripts.Render("~/bundles/test") %>
+
+    <script  type="text/javascript" src="https://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js"></script>
     <script type="text/javascript">
         var storage_demo_url = '<%= ConfigurationManager.AppSettings["storage_demo_url"]%>';
     </script>
+    <script type="text/javascript">
+        var secret = '<%= ConfigurationManager.AppSettings["files.docservice.secret"]%>';
+    </script>
 </asp:Content>
-
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     New page
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-
     <h1>
         <span class="hdr">Creating an editor</span>
-    </h1>
-
-   
+    </h1>   
 
     <select id="chooseAndCreateDocument" class="button button-upper" name="create">
         <option selected="selected" disabled>choose doc type</option>
@@ -39,7 +38,6 @@
 
     <br />
     <br />
-
 
     <button id="permissionButton" class="button button-upper">permissions</button>
 
@@ -58,7 +56,6 @@
             <input type="checkbox" class="permissionChecks" value="modifyFilter">modifyFilter<br>
         </div>
     </div>
-
 
     <br />
     <br />
