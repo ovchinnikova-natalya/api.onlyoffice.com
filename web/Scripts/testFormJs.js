@@ -149,18 +149,28 @@
                 + `&nbsp&nbsp&nbsp&nbsp "title": ${title}.${selectedOption},<br>`
                 + `&nbsp&nbsp&nbsp&nbsp "url": ${storage_demo_url}demo.${selectedOption},<br>`
                 + `&nbsp&nbsp&nbsp&nbsp "permissions":&nbsp{<br>`
-
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "copy": ${permissions.copyBool},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "download": ${permissions.downloadBool},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "edit": ${permissions.editBool},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "print": ${permissions.printBool},<br>`
             )
+            if (permissions.copyBool == false) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "copy": ${permissions.copyBool},<br>`);
+            }
+            if (permissions.downloadBool == false) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "download": ${permissions.downloadBool},<br>`);
+            }
+            if (permissions.printBool == false) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "print": ${permissions.printBool},<br>`
+                );
+            }
+            text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "edit": ${permissions.editBool},<br>`);            
             if (selectedOption == "xlsx") {
-                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "modifyFilter": ${permissions.modifyFilterBool},<br>`);
+                if (permissions.modifyFilterBool == false) {
+                    text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "modifyFilter": ${permissions.modifyFilterBool},<br>`);
+                }
             }
             if (selectedOption == "docx") {
-                text.html(text.html()
-                    + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "modifyContentControl": ${permissions.modifyContentControlBool},<br>`
+                if (permissions.modifyContentControlBool == false) {
+                    text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "modifyContentControl": ${permissions.modifyContentControlBool},<br>`);
+                }
+                text.html(text.html()                    
                     + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "comment": ${permissions.commentBool},<br>`
                     + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "fillForms": ${permissions.fillFormsBool},<br>`
                     + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "review": ${permissions.reviewBool},<br>`
@@ -178,20 +188,44 @@
 
                 + `&nbsp&nbsp&nbsp&nbsp },<br>`
                 + `&nbsp&nbsp&nbsp&nbsp "customization":&nbsp{<br>`
-
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "autosave": ${customization.autosave},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "chat": ${customization.chat},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "commentAuthorOnly": ${customization.commentAuthorOnly},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "comments": ${customization.comments},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "compactHeader": ${customization.compactHeader},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "compactToolbar": ${customization.compactToolbar},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "compatibleFeatures": ${customization.compatibleFeatures},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "macros": ${customization.macros},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "plugins": ${customization.plugins},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "help": ${customization.help},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "macrosMode": ${macroMode},<br>`
-                + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "unit": ${unit},<br>`
-
+            );
+            if (customization.autosave == false) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "autosave": ${customization.autosave},<br>`);
+            }
+            if (customization.chat == false) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "chat": ${customization.chat},<br>`);
+            }
+            if (customization.commentAuthorOnly == true) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "commentAuthorOnly": ${customization.commentAuthorOnly},<br>`);
+            }
+            if (customization.comments == false) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "comments": ${customization.comments},<br>`);
+            }
+            if (customization.compactHeader == true) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "compactHeader": ${customization.compactHeader},<br>`);
+            }
+            if (customization.compactToolbar == true) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "compactToolbar": ${customization.compactToolbar},<br>`);
+            }
+            if (customization.compatibleFeatures == true) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "compatibleFeatures": ${customization.compatibleFeatures},<br>`);
+            }
+            if (customization.macros == false) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "macros": ${customization.macros},<br>`);
+            }
+            if (customization.plugins == false) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "plugins": ${customization.plugins},<br>`);
+            }
+            if (customization.help == false) {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "help": ${customization.help},<br>`);
+            }
+            if (macroMode != "original") {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "macrosMode": ${macroMode},<br>`);
+            }
+            if (unit != "cm") {
+                text.html(text.html() + `&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp "unit": ${unit},<br>`);
+            }
+            text.html(text.html()
                 + `&nbsp&nbsp&nbsp&nbsp }<br>`
 
                 + '&nbsp&nbsp },<br>'
