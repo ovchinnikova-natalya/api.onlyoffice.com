@@ -107,6 +107,7 @@ namespace ASC.Api.Web.Help
 
             bundles.Add(new ScriptBundle("~/bundles/test")
                             .Include(
+                                "~/scripts/jsrsasign.js",
                                 "~/scripts/testFormJs.js"));
 
             bundles.Add(new Bundle("~/content/styles", new CssMinify())

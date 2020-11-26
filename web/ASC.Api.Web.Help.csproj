@@ -350,6 +350,7 @@
     <Content Include="Content\img\plugins\plugin-manager.png" />
     <Content Include="Content\img\plugins\remove-plugin-button.png" />
     <Content Include="Scripts\faq.js" />
+    <Content Include="Scripts\jsrsasign.js" />
     <Content Include="Scripts\testFormJs.js" />
     <Content Include="version.txt" />
     <Content Include="Global.asax" />

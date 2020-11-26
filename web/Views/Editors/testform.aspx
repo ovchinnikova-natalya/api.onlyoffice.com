@@ -10,8 +10,6 @@
 <asp:Content ID="FaqHead" ContentPlaceHolderID="HeadContent" runat="server">
     <script id="scriptApi" type="text/javascript" src="<%= ConfigurationManager.AppSettings["editor_url"] ?? "" %>/web-apps/apps/api/documents/api.js"></script>
     <%= Scripts.Render("~/bundles/test") %>
-
-    <script  type="text/javascript" src="https://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js"></script>
     <script type="text/javascript">
         var storage_demo_url = '<%= ConfigurationManager.AppSettings["storage_demo_url"]%>';
     </script>
@@ -39,14 +37,14 @@
     <br />
     <br />
 
-    <button id="permissionButton" class="button button-upper">permissions</button>
+    <button id="permissionButton" class="button button-upper" name="permissionButton">permissions</button>
 
     <div id="permissionConfig" hidden="hidden">        
         <input type="checkbox" class="permissionChecks" value="copy">copy<br>
         <input type="checkbox" class="permissionChecks" value="download">download<br>
         <input type="checkbox" class="permissionChecks" value="edit">edit<br>        
         <input type="checkbox" class="permissionChecks" value="print">print<br>
-        <div id="documentHiddenPerm" >
+        <div id="documentHiddenPerm">
             <input type="checkbox" class="permissionChecks" value="comment">comment<br>
             <input type="checkbox" class="permissionChecks" value="modifyContentControl">modifyContentControl<br>
             <input type="checkbox" class="permissionChecks" value="fillForms">fillForms<br>
@@ -72,7 +70,7 @@
         <input type="checkbox" class="customizationChecks" value="compatibleFeatures">compatibleFeatures<br>
         <input id="macro" type="checkbox" class="customizationChecks" value="macros">macros<br>
         <div id="macrosModeList" hidden="hidden">            
-            <select id="macroChoose" class="button" hidden="hidden">
+            <select id="macroChoose" class="button" hidden="hidden" name="macros">
                 <option selected="selected" disabled>Choose macros mode</option>
                 <option value="original">original</option>
                 <option value="warn">warn</option>
@@ -84,7 +82,7 @@
         </div>
         <input id="unit" type="checkbox" class="customizationChecks" value="unit">unit<br>
         <div id="unitList" hidden="hidden">               
-            <select id="unitChoose" class="button"  hidden="hidden">
+            <select id="unitChoose" class="button"  hidden="hidden" name="units">
                 <option selected="selected" disabled>choose unit</option>
                 <option value="cm">cm</option>
                 <option value="pt">pt</option>
@@ -101,11 +99,13 @@
     <br />
 
     <label>Document title</label>
-    <input id="inputDocTitle" type="text" />
-
+    <br />
+    <input id="inputDocTitle" type="text"  style="width:300px"/>
+    <br />
     <label>User name</label>
-    <input id="inputUserName" type="text" />
-
+    <br />
+    <input id="inputUserName" type="text" style="width:300px"/>
+    <br />
     <button id="createEditorButton" class="button button-upper">Create editor</button>
     <br />
     <br />
@@ -115,6 +115,7 @@
     <button id="showCodeButton" class="button button-upper">Show editors config</button>
     <div id="printCode">
         <p id="codeText"></p>
+        <button id="copyCodeText" class="button button-upper">Copy config</button>
     </div>
 
 </asp:Content>
