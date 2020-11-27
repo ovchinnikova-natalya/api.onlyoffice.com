@@ -115,7 +115,9 @@
     <button id="showCodeButton" class="button button-upper">Show editors config</button>
     <div id="printCode">
         <p id="codeText"></p>
-        <button id="copyCodeText" class="button button-upper">Copy config</button>
+        <div id="CopyDiv" hidden="hidden">
+        <button id="copyCodeText" class="button button-upper" >Copy config</button>
+        </div>
     </div>
 
 </asp:Content>

@@ -58,7 +58,6 @@
     })   // hide and show unit list
 
     $("#chooseAndCreateDocument").change(function () {
-        SetDefaultValues();
         let tmp1 = $("#documentHiddenPerm");
         let tmp2 = $("#xlsxHiddenPerm");
         selectedOption = $('select[name=create]').val();
@@ -138,8 +137,19 @@
     }
 
     $("#showCodeButton").click(function () {
+        $("#CopyDiv").toggle();
         let text = $("#codeText");
         if (text.html() == "") {
+            if (key == "") {
+                key = Math.random().toString(36).slice(-8);
+            }            
+            GetTitle();
+            EditorUserName();
+            GetPermissions();
+            GetCustomization();
+            if (secret != "") {
+                GenerateToken();
+            }
             text.html('docEditor = new DocsAPI.DocEditor("placeholder", <br>'
                 + '{<br>'
                 + '&nbsp&nbsp "document":<br>'
@@ -293,8 +303,10 @@
     }
 
     function CreateEditor() {
-        key = Math.random().toString(36).slice(-8);
-        if (secret != "") {
+        if (key == "") {
+            key = Math.random().toString(36).slice(-8);
+        }        
+        if (secret != "" && sJWT == "") {
             GenerateToken();
         }        
         window.docEditor = new DocsAPI.DocEditor("placeholder",
@@ -367,11 +379,14 @@
         $("#unitList").hide();
         $("#customizationConfig").hide();
         $("#permissionConfig").hide();
+        key = "";
+        sJWT = "";
     }  // after creating editor reset all values in form
 
     $("#createEditorButton").click(function () {
         if (window.docEditor) {
             docEditor.destroyEditor();
+            SetDefaultValues();
         }
         GetTitle();
         EditorUserName();
